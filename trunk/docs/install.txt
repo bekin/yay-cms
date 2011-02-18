@@ -1,0 +1,45 @@
+How to install this Content Management Module in your Yii application
+
+At first, we need to import the Database Schema. This is just one table
+called 'sitecontent'. At the moment, only a Database dump of mysql is 
+available.
+
+Import the docs/schema_mysql.sql to the mysql Database that your Application
+runs.
+
+Extract the archive yaycms.zip into your protected/modules folder.
+
+Add the module to your Application Configuration.
+[...]
+'modules' => array(
+	'cms' => array(
+	),
+[...]
+
+If you want to use the layout of your existing Web Application, set the layout
+to an empty string: 
+
+		'layout' => ''
+
+Otherwise an easy default layout of the cms will be used.
+
+Administrate your Content by using
+http://app/index.php?r=cms/sitecontent/admin
+
+or, when using a Route configuration, possibly
+
+http://app/index.php/cms/sitecontent/admin
+
+Please not that a 'sitecontent'-entry acts as a sitecontent as well as a
+menu point.
+
+In order to let your Application render the content at appropriate places,
+do is like this:
+
+// This will render a <ul><li>-based Menu containing all child elements of
+// the menu points.
+Cms::renderMenuPoints($menu_id); 
+
+Also see the models/Cms.php for additional features.
+
+
