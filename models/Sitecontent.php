@@ -16,7 +16,7 @@ class Sitecontent extends CActiveRecord
 	{
 		return array(
 			array('position, title, ', 'required'),
-			array('parent, position, authorid, createtime, updatetime', 'numerical', 'integerOnly'=>true),
+			array('parent, position, createtime, updatetime', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('content, title_url, title_browser', 'safe'),
 			array('id, position, title, content, authorid, createtime, updatetime', 'safe', 'on'=>'search'),
