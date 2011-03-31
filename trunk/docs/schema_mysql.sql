@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `sitecontent` (
   `title_browser` varchar(80) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `authorid` int(11) DEFAULT NULL,
+  `authorid` varchar(255) DEFAULT NULL,
   `createtime` int(11) DEFAULT NULL,
   `updatetime` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)

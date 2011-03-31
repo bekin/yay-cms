@@ -7,10 +7,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 		array(
-			'label'=>Yii::t('CmsModule.cms', 'Manage Menustructure'), 
-			'url'=>array('menustructure/admin')
-			),
-		array(
 			'label'=>Yii::t('CmsModule.cms', 'Manage Sitecontent'), 
 			'url'=>array('sitecontent/admin')
 			),
