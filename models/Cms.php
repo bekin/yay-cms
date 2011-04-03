@@ -10,9 +10,14 @@ Yii::import('application.modules.cms.controllers.*');
 			return Yii::t('CmsModule.cms', $string, $params);
 		}
 
-		public static function render($id = null, $return = false) {
+		public static function render($id = null, $return = false, $lang = null) {
+			if($lang === null)
+				$lang = Yii::app()->language;
+
 			if($id) {
-				$sitecontent = Sitecontent::model()->findByPk($id);
+				$sitecontent = Sitecontent::model()->find('id = :id and language = :lang', array(
+							':id' => $id,
+							':lang' => $lang));
 				if($return)
 					return $sitecontent->content;
 				else
