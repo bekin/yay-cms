@@ -7,6 +7,10 @@ class Sitecontent extends CActiveRecord
 		return parent::model($className);
 	}
 
+	public function primaryKey() {
+		return array('id', 'language');	
+	}
+
 	public function tableName()
 	{
 		return 'sitecontent';
