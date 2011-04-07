@@ -15,15 +15,25 @@ Yii::import('application.modules.cms.controllers.*');
 				$lang = Yii::app()->language;
 
 			if($id) {
-				$sitecontent = Sitecontent::model()->find('id = :id and language = :lang', array(
+				$sitecontent = Sitecontent::model()->find(
+						'id = :id and language = :lang', array(
 							':id' => $id,
 							':lang' => $lang));
-				if($return)
+
+				// If the sitecontent is not available in the requested language,
+				// try to fallback to the first natural found sitecontent in the db
+				if(!$sitecontent)
+					$sitecontent = Sitecontent::model()->find(
+							'id = :id', array(
+								':id' => $id));
+
+				if(!$sitecontent)
+					throw new CHttpException(404);
+				else if($return)
 					return $sitecontent->content;
 				else
 					echo $sitecontent->content;	
-			} else
-				throw new CHttpException(404);
+			}
 		}
 
 		public static function renderMenuPoints($id) {
