@@ -126,12 +126,12 @@ class SitecontentController extends Controller
 	{
 		if($this->_model===null)
 		{
-			if(is_array(@$_GET['id']))
+			if(isset($_GET['id']) && is_array(@$_GET['id']))
 				$this->_model = Sitecontent::model()->find('id = :id and language = :language',  array(
 							':id' => $_GET['id']['id'],
 							':language' => $_GET['id']['language'],
 							));
-			if(!is_array(@$_GET['id'])) 
+			if(isset($_GET['id']) && !is_array($_GET['id'])) 
 				$this->_model = Sitecontent::model()->find('id = :id',  array(
 							':id' => $_GET['id'],
 							));
