@@ -131,7 +131,7 @@ class SitecontentController extends Controller
 							':id' => $_GET['id']['id'],
 							':language' => $_GET['id']['language'],
 							));
-			if(!is_array($_GET['id'])) 
+			if(!is_array(@$_GET['id'])) 
 				$this->_model = Sitecontent::model()->find('id = :id',  array(
 							':id' => $_GET['id'],
 							));
