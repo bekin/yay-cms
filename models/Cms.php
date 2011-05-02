@@ -44,7 +44,7 @@ Yii::import('application.modules.cms.controllers.*');
 				foreach($sitecontent->childs as $child) {
 					printf('<li>%s</li>',
 							CHtml::link($child->title, array(
-									'/cms/sitecontent/view', 'id' => $child->id) ));
+									'/cms/sitecontent/view', 'page' => $child->title_url) ));
 				}
 			}
 		}
