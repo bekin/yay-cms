@@ -127,7 +127,8 @@ class SitecontentController extends Controller
 		if($this->_model===null)
 		{
 			if(isset($_GET['id']))
-				$this->_model = Sitecontent::model()->findbyPk($_GET['id']);
+				$this->_model = Sitecontent::model()->find('id = :id',  array(
+							':id' => $_GET['id']));
 			if($this->_model === null)
 				$this->_model = Sitecontent::model()->find("title_url = :page", array(
 							':page' => $_GET['page']));
