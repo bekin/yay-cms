@@ -4,6 +4,10 @@ Yii::import('application.modules.cms.models.*');
 Yii::import('application.modules.cms.controllers.*');
 
 	class Cms {
+		public function module() {
+			return Yii::app()->getModule('cms');
+
+		}
 		public static function t($string, $params = array())
 		{
 			Yii::import('application.modules.cms.CmsModule');
@@ -27,7 +31,7 @@ Yii::import('application.modules.cms.controllers.*');
 							'id = :id', array(
 								':id' => $id));
 
-				if(!$sitecontent)
+				if(!$sitecontent && Cms::module()->strict404raising)
 					throw new CHttpException(404);
 				else if($return)
 					return $sitecontent->content;
