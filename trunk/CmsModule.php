@@ -10,6 +10,13 @@ class CmsModule extends CWebModule
 	public $rteadapter = false; // Don't use an Adapter
 	public $ckfinderPath = false; // do not use CKFinder
 
+	// Which languages do your cms serve?
+	public $languages = array('en' => 'English');
+
+	// If a page is requested by CMS::render and not found, should
+	// a 404 be raised or the content simply not be delivered?
+	public $strict404raising = false;
+
 	public function init()
 	{
 		$this->setImport(array(

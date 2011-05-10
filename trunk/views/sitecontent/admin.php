@@ -43,6 +43,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'dataProvider'=>$model->search(),
 			'filter'=>$model,
 			'columns'=>array(
+				'id',
+				'language',
 				'title',
 				array(
 					'name'=>'createtime',
@@ -58,3 +60,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					),
 				),
 			)); ?>
+
+<?php echo CHtml::link('New sitecontent', array('//cms/sitecontent/create')); ?>

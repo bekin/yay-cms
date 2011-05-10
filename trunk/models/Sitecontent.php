@@ -19,11 +19,11 @@ class Sitecontent extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('position, title, ', 'required'),
+			array('id, position, title, language', 'required'),
 			array('parent, position, createtime, updatetime', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('content, title_url, title_browser', 'safe'),
-			array('id, position, title, content, authorid, createtime, updatetime', 'safe', 'on'=>'search'),
+			array('id, position, title, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,6 +48,7 @@ class Sitecontent extends CActiveRecord
 			'authorid' => Yii::t('CmsModule.cms', 'Authorid'),
 			'createtime' => Yii::t('CmsModule.cms', 'Createtime'),
 			'updatetime' => Yii::t('CmsModule.cms', 'Updatetime'),
+			'language' => Yii::t('CmsModule.cms', 'Language'),
 		);
 	}
 
@@ -56,17 +57,12 @@ class Sitecontent extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-
 		$criteria->compare('position',$this->position);
-
+		$criteria->compare('language',$this->language);
 		$criteria->compare('title',$this->title,true);
-
 		$criteria->compare('content',$this->content,true);
-
 		$criteria->compare('authorid',$this->authorid);
-
 		$criteria->compare('createtime',$this->createtime);
-
 		$criteria->compare('updatetime',$this->updatetime);
 
 		return new CActiveDataProvider('Sitecontent', array(
