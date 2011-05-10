@@ -18,9 +18,13 @@ Yii::import('application.modules.cms.controllers.*');
 			if($lang === null)
 				$lang = Yii::app()->language;
 
+			$column = 'id';
+			if(!is_numeric($id))
+				$column = 'title_url';
+
 			if($id) {
 				$sitecontent = Sitecontent::model()->find(
-						'id = :id and language = :lang', array(
+						$column . ' = :id and language = :lang', array(
 							':id' => $id,
 							':lang' => $lang));
 
@@ -28,7 +32,7 @@ Yii::import('application.modules.cms.controllers.*');
 				// try to fallback to the first natural found sitecontent in the db
 				if(!$sitecontent)
 					$sitecontent = Sitecontent::model()->find(
-							'id = :id', array(
+							$column .' = :id', array(
 								':id' => $id));
 
 				if(!$sitecontent && Cms::module()->strict404raising)
