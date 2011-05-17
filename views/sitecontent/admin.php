@@ -49,6 +49,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'filter' => Cms::module()->languages,
 					),
 				'title',
+				'keywords',
+				'description',
 				array(
 					'name'=>'createtime',
 					'value'=>'date(Yii::app()->controller->module->dateformat, $data->createtime)',
