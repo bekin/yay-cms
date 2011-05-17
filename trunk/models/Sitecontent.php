@@ -11,6 +11,14 @@ class Sitecontent extends CActiveRecord
 		return array('id', 'language');	
 	}
 
+	public function beforeValidate() {
+		if(Cms::module()->enableHtmlPurifier) {
+			$purifier = new CHtmlPurifier();
+			$this->content = $purifier->purify($this->content);
+		}	
+		return parent::beforeValidate();	
+	}
+
 	public function tableName()
 	{
 		return 'sitecontent';
@@ -30,9 +38,9 @@ class Sitecontent extends CActiveRecord
 	public function relations()
 	{
 		return array(
-			'parent' => array(self::BELONGS_TO, 'Sitecontent', 'parent'),
-			'childs' => array(self::HAS_MANY, 'Sitecontent', 'parent'),
-		);
+				'parent' => array(self::BELONGS_TO, 'Sitecontent', 'parent'),
+				'childs' => array(self::HAS_MANY, 'Sitecontent', 'parent'),
+				);
 	}
 
 	public function attributeLabels()
@@ -66,7 +74,7 @@ class Sitecontent extends CActiveRecord
 		$criteria->compare('updatetime',$this->updatetime);
 
 		return new CActiveDataProvider('Sitecontent', array(
-			'criteria'=>$criteria,
-		));
+					'criteria'=>$criteria,
+					));
 	}
 }

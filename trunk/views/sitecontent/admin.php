@@ -44,15 +44,20 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'filter'=>$model,
 			'columns'=>array(
 				'id',
-				'language',
+				array(
+					'name' => 'language',
+					'filter' => Cms::module()->languages,
+					),
 				'title',
 				array(
 					'name'=>'createtime',
 					'value'=>'date(Yii::app()->controller->module->dateformat, $data->createtime)',
+					'filter' => false,
 				),
 				array(
 					'name'=>'updatetime',
 					'value'=>'date(Yii::app()->controller->module->dateformat, $data->updatetime)',
+					'filter' => false,
 				),
 				'position',
 				array(
