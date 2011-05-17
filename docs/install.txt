@@ -1,27 +1,27 @@
-How to install this Content Management Module in your Yii application
+How to install this Content Management Module in your Yii application:
 
-At first, we need to import the Database Schema. This is just one table
-called 'sitecontent'. At the moment, only a Database dump of mysql is 
-available.
+1.) Extract the archive into your protected/modules folder.
 
-Import the docs/schema_mysql.sql to the mysql Database that your Application
-runs.
+2.) Import the docs/schema_mysql.sql to the mysql Database that your 
+Application runs. Only one table, called 'sitecontent', will be inserted.
 
-Extract the archive yaycms.zip into your protected/modules folder.
+$ mysql -u root -p < docs/schema_mysql.sql -D database_name
 
-Add the module to your Application Configuration.
+Add the module to your application Configuration.
 [...]
 'modules' => array(
-	'cms' => array(
-	),
+		'cms' => array(
+			'languages' => array('en', 'de') // <-- languages you want to allow 
+			)
+		),
 [...]
 
 If you want to use the layout of your existing Web Application, set the layout
-to an empty string: 
+to an empty string, or null: 
 
-		'layout' => ''
+		'layout' => null,
 
-Otherwise an easy default layout of the cms will be used.
+Otherwise an lightweight default layout of the cms will be used.
 
 Administrate your Content by using
 http://app/index.php?r=cms/sitecontent/admin
@@ -38,8 +38,27 @@ do is like this:
 
 // This will render a <ul><li>-based Menu containing all child elements of
 // the menu points.
-Cms::renderMenuPoints($menu_id); 
+Cms::renderMenuPoints($id_of_the_sitecontent_page); 
 
-Also see the models/Cms.php for additional features.
+Use Cms::render($page, $language) to render sitecontent everywhere you want
+in your views, models or controllers:
+
+// render sitecontent page 3
+<?php echo Cms::render(3); ?>
+
+// render sitecontent page with the url_title footer
+<?php echo Cms::render('footer'); ?>
+
+// render sitecontent page with the url_title footer in _french_.
+// note that, by default, cms::render tries to resolve the page in the
+// language of Yii::app()->language:
+<?php echo Cms::render('footer', 'fr'); ?>
 
 
+Please also read CmsModule.php for additional configuration options.
+
+Feel free to contact me at:
+skype: herbertmaschke
+icq: 38541423
+email: thyseus@gmail.com
+yii-forum username: thyseus

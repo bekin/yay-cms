@@ -4,7 +4,7 @@ if(isset($sc))
 if(isset($menu))
 	 $this->pageTitle = $menu->title. ' - ' . Yii::app()->name;
 
-if(Yii::app()->user->id == 1) // is admin - FIXME
+if(Yii::app()->user->id == 1) // is admin 
 {
 	if(is_object($sitecontent)) 
 	{

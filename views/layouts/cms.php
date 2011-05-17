@@ -34,3 +34,5 @@
 
 </body>
 </html>
+
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/form.css'); ?>
