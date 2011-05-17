@@ -51,6 +51,18 @@ Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtea
 </div>
 
 <div class="row">
+<?php echo $form->labelEx($model,'keywords'); ?>
+<?php echo $form->textField($model,'keywords',array('size'=>60,'maxlength'=>255)); ?>
+<?php echo $form->error($model,'keywords'); ?>
+</div>
+
+<div class="row">
+<?php echo $form->labelEx($model,'description'); ?>
+<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>255)); ?>
+<?php echo $form->error($model,'description'); ?>
+</div>
+
+<div class="row">
 <?php echo $form->labelEx($model,'title_browser'); ?>
 <?php echo $form->textField($model,'title_browser',array('size'=>60,'maxlength'=>80)); ?>
 <?php echo $form->error($model,'title_browser'); ?>

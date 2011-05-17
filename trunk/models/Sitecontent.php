@@ -29,9 +29,9 @@ class Sitecontent extends CActiveRecord
 		return array(
 			array('id, position, title, language', 'required'),
 			array('parent, position, createtime, updatetime', 'numerical', 'integerOnly'=>true),
-			array('title', 'length', 'max'=>255),
+			array('title, keywords, description', 'length', 'max'=>255),
 			array('content, title_url, title_browser', 'safe'),
-			array('id, position, title, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
+			array('id, position, title, keywords, description, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +68,8 @@ class Sitecontent extends CActiveRecord
 		$criteria->compare('position',$this->position);
 		$criteria->compare('language',$this->language);
 		$criteria->compare('title',$this->title,true);
+		$criteria->compare('keywords',$this->keywords,true);
+		$criteria->compare('description',$this->description,true);
 		$criteria->compare('content',$this->content,true);
 		$criteria->compare('authorid',$this->authorid);
 		$criteria->compare('createtime',$this->createtime);
