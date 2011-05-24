@@ -15,6 +15,23 @@ Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtea
 
 <?php echo $form->errorSummary($model); ?>
 
+
+<fieldset style="float: right; width: 300px;margin: 10px;"><legend ><?php echo Cms::t('Metatags'); ?> </legend>
+<?php
+$metatags = $model->metatags;
+if(!$metatags)
+	$metatags = array();
+
+foreach(Cms::module()->allowedMetaTags as $metatag) {
+	echo '<div class="row">';
+	echo $form->labelEx($model, $metatag);	
+	echo CHtml::textField("Sitecontent[metatags][$metatag]", 
+			isset($metatags[$metatag]) ? (string) $metatags[$metatag] : '');	
+	echo $form->error($model, $metatag);	
+} ?>
+</fieldset>
+
+
 <div class="row">
 <?php echo $form->labelEx($model,'parent'); ?>
 <?php echo CHtml::activeDropDownList($model,
@@ -27,6 +44,13 @@ Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtea
 				'0' => ' - '))); ?>
 <?php echo $form->error($model,'header'); ?>
 </div>
+
+<div class="row">
+<?php echo $form->labelEx($model,'visible'); ?>
+<?php echo $form->dropDownList($model, 'visible', $model->itemAlias('visible')); ?>
+<?php echo $form->error($model,'visible'); ?>
+</div>
+
 
 <div class="row" style="float:right;">
 <?php echo $form->labelEx($model,'position'); ?>
@@ -48,18 +72,6 @@ Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtea
 <?php echo $form->labelEx($model,'title'); ?>
 <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?>
 <?php echo $form->error($model,'title'); ?>
-</div>
-
-<div class="row">
-<?php echo $form->labelEx($model,'keywords'); ?>
-<?php echo $form->textField($model,'keywords',array('size'=>60,'maxlength'=>255)); ?>
-<?php echo $form->error($model,'keywords'); ?>
-</div>
-
-<div class="row">
-<?php echo $form->labelEx($model,'description'); ?>
-<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>255)); ?>
-<?php echo $form->error($model,'description'); ?>
 </div>
 
 <div class="row">
