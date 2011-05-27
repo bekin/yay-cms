@@ -37,7 +37,8 @@ class SitecontentController extends Controller
 	{
 		$model = $this->loadContent();
 
-		$this->breadcrumbs = array($model->title);
+		if(!isset($this->breadcrumbs))
+			$this->breadcrumbs = array($model->title);
 
 		$this->render('view', array(
 					'sitecontent' => $model,
