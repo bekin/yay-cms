@@ -19,7 +19,7 @@ class Sitecontent extends CActiveRecord
 						'metatags')));
 	}
 
-	public function itemAlias($alias, $value = -10) {
+	public static function itemAlias($alias, $value = -10) {
 		// - 10 is needed to avoid that a sitecontent has a value of NULL and
 		// a array gets returned accidentally
 		$visible = array(
