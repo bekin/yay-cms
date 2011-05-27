@@ -4,7 +4,7 @@ Yii::import('application.modules.cms.models.*');
 Yii::import('application.modules.cms.controllers.*');
 
 class Cms {
-	public function module() {
+	public static function module() {
 		return Yii::app()->getModule('cms');
 
 	}
