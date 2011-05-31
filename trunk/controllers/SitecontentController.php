@@ -33,6 +33,23 @@ class SitecontentController extends Controller
 		return array('accessControl');
 	}
 
+	public function accessRules() {
+		return array(
+				array('allow',
+					'actions'=>array('view'),
+					'users'=>array('*'),
+					),
+				array('allow',
+					'actions'=>array('update', 'create', 'admin'),
+					'users'=>array('admin'),
+					),
+				array('deny',  // deny all other users
+					'users'=>array('*'),
+					),
+				);
+
+	}
+
 	public function actionView()
 	{
 		$model = $this->loadContent();
