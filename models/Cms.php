@@ -14,7 +14,11 @@ class Cms {
 		return Yii::t('CmsModule.cms', $string, $params);
 	}
 
-	public static function render($id = null, $return = false, $lang = null) {
+	public function render($id = null, $lang = null) {
+		echo Cms::get($id, $lang, true);
+	}
+
+	public static function get($id = null, $lang = null, $render = false) {
 		if($lang === null)
 			$lang = Yii::app()->language;
 
@@ -37,10 +41,12 @@ class Cms {
 
 			if(!$sitecontent && Cms::module()->strict404raising)
 				throw new CHttpException(404);
-			else if($return)
-				return $sitecontent->content;
-			else
-				echo $sitecontent->content;	
+
+			if ($render && $sitecontent->visible != 1)
+				throw new CHttpException(404);
+
+			if($sitecontent)
+				return $sitecontent->content;	
 		}
 	}
 
