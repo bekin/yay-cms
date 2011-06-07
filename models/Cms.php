@@ -14,7 +14,7 @@ class Cms {
 		return Yii::t('CmsModule.cms', $string, $params);
 	}
 
-	public function render($id = null, $lang = null) {
+	public static function render($id = null, $lang = null) {
 		echo Cms::get($id, $lang, true);
 	}
 
@@ -50,16 +50,55 @@ class Cms {
 		}
 	}
 
-	public static function renderMenuPoints($id) {
+	// for usage in CMenu Widget
+	public static function getMenuPoints($id, $lang = null) {
+		if(!$lang)
+			$lang = Yii::app()->language;
+
+		$column = 'title_url';
 		if(is_numeric($id))
-			$sitecontent = Sitecontent::model()->findByPk($id);
+			$column = 'id';
+			
+			$sitecontent = Sitecontent::model()->find(
+					$column.' = :id and language = :lang', array(
+						':lang' => $lang,
+						':id' => $id,
+						));
+			$items = array();
+			if($sitecontent) {
+				$childs = $sitecontent->childs;
+				if($childs)  {
+					foreach($sitecontent->childs as $child) {
+						$items[] = array(
+								'visible' => $child->visible,
+								'label' => $child->title,
+								'url' => array('//cms/sitecontent/view', 'page' => $child->title_url)
+								);
+					}
+				}
+			}
+			return $items;
+	}
+
+	public static function renderMenuPoints($id, $lang = null) {
+		if(!$lang)
+			$lang = Yii::app()->language;
+
+		if(is_numeric($id))
+			$sitecontent = Sitecontent::model()->find(
+					'id = :id and language = :lang', array(
+						':lang' => $lang,
+						':id' => $id,
+						));
 		$childs = $sitecontent->childs;
 		if($childs)  {
+			echo '<ul>';
 			foreach($sitecontent->childs as $child) {
 				printf('<li>%s</li>',
 						CHtml::link($child->title, array(
 								'/cms/sitecontent/view', 'page' => $child->title_url) ));
 			}
+			echo '</ul>';
 		}
 	}
 }
