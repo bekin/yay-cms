@@ -8,6 +8,7 @@ class Cms {
 		return Yii::app()->getModule('cms');
 
 	}
+
 	public static function t($string, $params = array())
 	{
 		Yii::import('application.modules.cms.CmsModule');

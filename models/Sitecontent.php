@@ -23,9 +23,10 @@ class Sitecontent extends CActiveRecord
 		// - 10 is needed to avoid that a sitecontent has a value of NULL and
 		// a array gets returned accidentally
 		$visible = array(
-				'-1' => 'System Page',
-				'0' => 'Hidden',
-				'1' => 'Public',
+				'0' => Cms::t('System Page'),
+				'1' => Cms::t('Hidden'),
+				'2' => Cms::t('Restricted'),
+				'3' => Cms::t('Public'),
 				);
 
 		if($alias == 'visible' && $value === -10)
@@ -82,6 +83,7 @@ class Sitecontent extends CActiveRecord
 				'createtime' => Yii::t('CmsModule.cms', 'Createtime'),
 				'updatetime' => Yii::t('CmsModule.cms', 'Updatetime'),
 				'language' => Yii::t('CmsModule.cms', 'Language'),
+				'visible' => Yii::t('CmsModule.cms', 'Visible'),
 				);
 	}
 
