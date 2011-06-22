@@ -1,34 +1,35 @@
 <?php
-if(Yii::app()->getModule('cms')->rtepath != false)
-Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtepath, CClientScript::POS_HEAD); 
-if(Yii::app()->getModule('cms')->rteadapter != false)
-Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rteadapter, CClientScript::POS_HEAD); 
+if(Cms::module()->rtepath != false)
+	Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtepath, CClientScript::POS_HEAD); 
+if(Cms::module()->rteadapter != false)
+	Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rteadapter, CClientScript::POS_HEAD); 
+if(Cms::module()->rtescript != false)
+	Yii::app()->clientScript->registerScript('rte_init', Cms::module()->rtescript);
+	?>
 
-?>
+	<div class="form">
 
-<div class="form">
+	<?php $form=$this->beginWidget('CActiveForm', array(
+				'id'=>'sitecontent-form',
+				'enableAjaxValidation'=>true,
+				)); ?>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-			'id'=>'sitecontent-form',
-			'enableAjaxValidation'=>true,
-			)); ?>
-
-<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($model); ?>
 
 
-<fieldset style="float: right; width: 300px;margin: 10px;"><legend ><?php echo Cms::t('Metatags'); ?> </legend>
-<?php
-$metatags = $model->metatags;
+	<fieldset style="float: right; width: 300px;margin: 10px;"><legend ><?php echo Cms::t('Metatags'); ?> </legend>
+	<?php
+	$metatags = $model->metatags;
 if(!$metatags)
 	$metatags = array();
 
-foreach(Cms::module()->allowedMetaTags as $metatag) {
-	echo '<div class="row">';
-	echo $form->labelEx($model, $metatag);	
-	echo CHtml::textField("Sitecontent[metatags][$metatag]", 
-			isset($metatags[$metatag]) ? (string) $metatags[$metatag] : '');	
-	echo $form->error($model, $metatag);	
-} ?>
+	foreach(Cms::module()->allowedMetaTags as $metatag) {
+		echo '<div class="row">';
+		echo $form->labelEx($model, $metatag);	
+		echo CHtml::textField("Sitecontent[metatags][$metatag]", 
+				isset($metatags[$metatag]) ? (string) $metatags[$metatag] : '');	
+		echo $form->error($model, $metatag);	
+	} ?>
 </fieldset>
 
 
@@ -96,7 +97,6 @@ foreach(Cms::module()->allowedMetaTags as $metatag) {
 <div class="row">
 <?php echo $form->labelEx($model,'content'); ?>
 <?php echo $form->textArea($model,'content',array('rows'=>6, 'cols'=>50)); ?>
-<?php Yii::app()->clientScript->registerScript("ckeditor", "$('#Sitecontent_content').ckeditor();"); ?>
 <?php echo $form->error($model,'content'); ?>
 </div>
 
