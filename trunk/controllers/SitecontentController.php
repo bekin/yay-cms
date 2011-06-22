@@ -50,16 +50,26 @@ class SitecontentController extends Controller
 
 	}
 
-	public function actionView()
+	public function actionView($ajax = false)
 	{
 		$model = $this->loadContent();
+
+		if($model->metatags)
+			foreach($model->metatags as $tag => $content) 
+				if($content)
+					Yii::app()->clientScript->registerMetaTag($content, $tag);
 
 		if(!isset($this->breadcrumbs))
 			$this->breadcrumbs = array($model->title);
 
-		$this->render('view', array(
-					'sitecontent' => $model,
-					));
+		if($ajax)
+			$this->renderPartial('view', array(
+						'sitecontent' => $model,
+						));
+		else
+			$this->render('view', array(
+						'sitecontent' => $model,
+						));
 	}
 
 	public function actionCreate()
@@ -91,6 +101,7 @@ class SitecontentController extends Controller
 
 	public function actionUpdate()
 	{
+		$this->layout = Cms::module()->adminLayout;
 		$model=$this->loadContent();
 
 		$this->performAjaxValidation($model);
@@ -131,6 +142,7 @@ class SitecontentController extends Controller
 
 	public function actionAdmin()
 	{
+		$this->layout = Cms::module()->adminLayout;
 		$model=new Sitecontent('search');
 		if(isset($_GET['Sitecontent']))
 			$model->attributes=$_GET['Sitecontent'];
@@ -157,9 +169,24 @@ class SitecontentController extends Controller
 			if($this->_model === null)
 				$this->_model = Sitecontent::model()->find("title_url = :page", array(
 							':page' => $_GET['page']));
+
 			if($this->_model===null)
-				throw new CHttpException(404,Yii::t('App','We are sorry. The requested page does not exist.'));
+				throw new CHttpException(404,Cms::t(
+							'The requested page does not exist.'));
+		} 
+
+		if($this->_model) {
+			if(!Yii::app()->user->isAdmin()) {
+				if(Yii::app()->user->isGuest && $this->_model->visible != 3) 
+					throw new CHttpException(403, Cms::t('This page is not available to the public'));
+
+				else if(!Yii::app()->user->isGuest 
+						&& $this->_model->visible != 2
+						&& $this->_model->visible != 3)
+					throw new CHttpException(403, Cms::t('Only authenticated members can view this resource'));
+			}
 		}
+
 		return $this->_model;
 	}
 

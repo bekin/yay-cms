@@ -1,5 +1,11 @@
 <?php
 return array(
+	'System Page' => 'Systemseite',
+	'Public' => 'Öffentlich',
+	'Hidden' => 'Versteckt',
+	'Restricted' => 'Eingeschränkt',
+	'Language' => 'Sprache',
+	'Visible' => 'Sichtbarkeit',
 	'Search results' => 'Suchergebnisse',
 	'Promote' => 'Bewerben',
 	'Results:' => 'Treffer:',
