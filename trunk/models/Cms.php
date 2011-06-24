@@ -52,7 +52,9 @@ class Cms {
 	}
 
 	// for usage in CMenu Widget
-	public static function getMenuPoints($id, $lang = null) {
+	public static function getMenuPoints($id,
+			$lang = null,
+			$route = '//cms/sitecontent/view') {
 		if(!$lang)
 			$lang = Yii::app()->language;
 
@@ -73,7 +75,7 @@ class Cms {
 						$items[] = array(
 								'visible' => $child->visible,
 								'label' => $child->title,
-								'url' => array('//cms/sitecontent/view', 'page' => $child->title_url)
+								'url' => array($route, 'page' => $child->title_url)
 								);
 					}
 				}
