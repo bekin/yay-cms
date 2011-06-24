@@ -8,7 +8,7 @@ class SitecontentController extends Controller
 
 	public function beforeAction($action)
 	{
-		$this->layout = Yii::app()->controller->module->layout;
+		$this->layout = Cms::module()->layout;
 		return true;
 	}
 
@@ -74,7 +74,9 @@ class SitecontentController extends Controller
 
 	public function actionCreate()
 	{
-		$model=new Sitecontent;
+
+		$this->layout = Cms::module()->adminLayout;
+		$model = new Sitecontent;
 
 		$this->performAjaxValidation($model);
 

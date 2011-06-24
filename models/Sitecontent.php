@@ -64,7 +64,7 @@ class Sitecontent extends CActiveRecord
 	public function relations()
 	{
 		return array(
-				'parent' => array(self::BELONGS_TO, 'Sitecontent', 'parent'),
+				'Parent' => array(self::BELONGS_TO, 'Sitecontent', 'parent'),
 				'childs' => array(self::HAS_MANY, 'Sitecontent', 'parent'),
 				);
 	}
@@ -92,6 +92,7 @@ class Sitecontent extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('parent',$this->parent);
 		$criteria->compare('position',$this->position);
 		$criteria->compare('language',$this->language);
 		$criteria->compare('title',$this->title,true);
