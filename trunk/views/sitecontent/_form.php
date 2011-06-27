@@ -53,7 +53,7 @@ if(!$metatags)
 </div>
 
 
-<div class="row" style="float:right;">
+<div class="row">
 <?php echo $form->labelEx($model,'position'); ?>
 <?php for($i = 0; $i < 10; $i++) $position[] = $i; ?>
 <?php echo CHtml::dropDownList('Sitecontent[position]',

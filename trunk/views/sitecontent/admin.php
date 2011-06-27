@@ -3,6 +3,18 @@ $this->breadcrumbs=array(
 	Cms::t('Sitecontent')=>array('index'),
 	Cms::t('Manage'),
 );
+
+$this->menu=array(
+		array(
+			'label'=>Cms::t('Manage Sitecontent'), 
+			'url'=>array('sitecontent/admin')
+			),
+		array(
+			'label'=>Cms::t('Create new Sitecontent'),
+			'url'=>array('create')),
+		);
+
+
 ?>
 
 <h2><?php echo Yii::t('CmsModule.cms', 'Manage Sitecontent'); ?></h2>
@@ -48,4 +60,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 			)); ?>
 
-<?php echo CHtml::link('New sitecontent', array('//cms/sitecontent/create')); ?>
+<?php echo CHtml::link(Cms::t('Create new Sitecontent'), array('//cms/sitecontent/create')); ?>
