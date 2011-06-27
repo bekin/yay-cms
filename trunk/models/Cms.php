@@ -10,9 +10,9 @@ class Cms {
 	}
 	public static function register($file)
 	{
-		$url = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('CmsAssets'));
+		$path = Yii::app()->getAssetManager()->publish(
+				Yii::getPathOfAlias('application.modules.cms.assets').'/'.$file);
 
-		$path = $url . '/' . $file;
 		if(strpos($file, 'js') !== false)
 			return Yii::app()->clientScript->registerScriptFile($path);
 		else if(strpos($file, 'css') !== false)
@@ -20,6 +20,7 @@ class Cms {
 
 		return $path;
 	}
+
 	public static function t($string, $params = array())
 	{
 		Yii::import('application.modules.cms.CmsModule');
@@ -54,8 +55,8 @@ class Cms {
 			if(!$sitecontent && Cms::module()->strict404raising)
 				throw new CHttpException(404);
 
-			if ($render && $sitecontent->visible != 1)
-				throw new CHttpException(404);
+			if ($render && $sitecontent->visible != 3)
+				throw new CHttpException(403);
 
 			if($sitecontent)
 				return $sitecontent->content;	
