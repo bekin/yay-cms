@@ -78,6 +78,10 @@ class SitecontentController extends Controller
 		$this->layout = Cms::module()->adminLayout;
 		$model = new Sitecontent;
 
+		if($model->visible === null)
+			$model->visible = 3;
+
+
 		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Sitecontent']))

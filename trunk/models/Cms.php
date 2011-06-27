@@ -8,7 +8,7 @@ class Cms {
 		return Yii::app()->getModule('cms');
 
 	}
-public static function register($file)
+	public static function register($file)
 	{
 		$url = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('CmsAssets'));
 
@@ -69,50 +69,62 @@ public static function register($file)
 		if(!$lang)
 			$lang = Yii::app()->language;
 
-		$column = 'title_url';
-		if(is_numeric($id))
-			$column = 'id';
-			
-			$sitecontent = Sitecontent::model()->find(
-					$column.' = :id and language = :lang', array(
-						':lang' => $lang,
-						':id' => $id,
-						));
-			$items = array();
-			if($sitecontent) {
-				$childs = $sitecontent->childs;
-				if($childs)  {
-					foreach($sitecontent->childs as $child) {
-						$items[] = array(
-								'visible' => $child->visible,
-								'label' => $child->title,
-								'url' => array($route, 'page' => $child->title_url)
-								);
-					}
-				}
-			}
-			return $items;
-	}
+	$column = 'title_url';
+	if(is_numeric($id))
+		$column = 'id';
 
-	public static function renderMenuPoints($id, $lang = null) {
-		if(!$lang)
-			$lang = Yii::app()->language;
-
-		if(is_numeric($id))
-			$sitecontent = Sitecontent::model()->find(
-					'id = :id and language = :lang', array(
-						':lang' => $lang,
-						':id' => $id,
-						));
+	$sitecontent = Sitecontent::model()->find(
+			$column.' = :id and language = :lang', array(
+				':lang' => $lang,
+				':id' => $id,
+				));
+	$items = array();
+	if($sitecontent) {
 		$childs = $sitecontent->childs;
 		if($childs)  {
-			echo '<ul>';
 			foreach($sitecontent->childs as $child) {
-				printf('<li>%s</li>',
-						CHtml::link($child->title, array(
-								'/cms/sitecontent/view', 'page' => $child->title_url) ));
+				$items[] = array(
+						'visible' => $child->visible,
+						'active' => isset($_GET['page']) && Cms::isMenuPointActive($child, $_GET['page']),
+						'label' => $child->title,
+						'url' => array($route, 'page' => $child->title_url)
+						);
 			}
-			echo '</ul>';
 		}
 	}
+	return $items;
+}
+
+public static function isMenuPointActive($sitecontent, $page) {
+	if(!$sitecontent instanceof Sitecontent)
+		return false;
+
+	$titles = array($sitecontent->title_url);
+	$titles = array_merge($titles, $sitecontent->getChildTitles());
+	
+	return in_array($page, $titles);
+}
+
+
+public static function renderMenuPoints($id, $lang = null) {
+	if(!$lang)
+		$lang = Yii::app()->language;
+
+	if(is_numeric($id))
+		$sitecontent = Sitecontent::model()->find(
+				'id = :id and language = :lang', array(
+					':lang' => $lang,
+					':id' => $id,
+					));
+	$childs = $sitecontent->childs;
+	if($childs)  {
+		echo '<ul>';
+		foreach($sitecontent->childs as $child) {
+			printf('<li>%s</li>',
+					CHtml::link($child->title, array(
+							'/cms/sitecontent/view', 'page' => $child->title_url) ));
+		}
+		echo '</ul>';
+	}
+}
 }
