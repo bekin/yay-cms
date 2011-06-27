@@ -49,6 +49,25 @@ class Sitecontent extends CActiveRecord
 		return 'sitecontent';
 	}
 
+public function getParentTitles() {
+	$titles = array($this->title_url);
+		if($this->parent)
+			$titles = array_merge($titles, $this->Parent->getParentTitles());
+
+	unset ($titles[0]);
+		return $titles;
+}
+
+public function getChildTitles() {
+	$titles = array($this->title_url);
+	if($this->childs)
+		foreach($this->childs as $child)
+			$titles = array_merge($titles, $child->getChildTitles());
+
+	return $titles;
+}
+
+
 	public function rules()
 	{
 		return array(

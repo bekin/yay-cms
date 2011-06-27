@@ -34,6 +34,10 @@ class CmsModule extends CWebModule
 	// a 404 be raised or the content simply not be delivered?
 	public $strict404raising = false;
 
+	public $sitecontentCreateRoute = '//cms/sitecontent/create';
+	public $sitecontentUpdateRoute = '//cms/sitecontent/update';
+	public $sitecontentAdminRoute = '//cms/sitecontent/admin';
+
 	public function init()
 	{
 		$this->setImport(array(

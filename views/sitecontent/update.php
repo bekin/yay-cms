@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h2><?php echo Yii::t('CmsModule.cms', 'Update');?> <?php echo $model->title; ?></h2>
+<h2><?php echo Cms::t('Update');?> <?php echo $model->title; ?></h2>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
