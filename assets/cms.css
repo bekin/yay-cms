@@ -139,3 +139,5 @@ table, td, th 				{vertical-align:middle;}
 
 #cms #footer a:hover,
 #cms #footer a:active{ text-decoration:none;}
+
+.password { display: none; }

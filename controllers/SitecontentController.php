@@ -21,7 +21,7 @@ class SitecontentController extends Controller
 					'results' => $results,
 					'search' => $_POST['search']));
 	}
-	
+
 	public static function getContent($id) {
 		if($model = Sitecontent::model()->findByPk($id)) {
 			return $model->content;
@@ -33,10 +33,30 @@ class SitecontentController extends Controller
 		return array('accessControl');
 	}
 
+	public function actionAuth() {
+		if(isset($_POST['password'])) {
+			$password = md5($_POST['password']);
+			Yii::app()->user->setState('yay_cms_password', $password);
+
+			$valid = false;
+			foreach(Sitecontent::model()->findAll('visible = 2') as $content) 
+				if($content->password !== null) 
+					if($password == $content->password)
+						$valid = true;
+
+			if($valid)
+				Cms::setFlash('The password is correct');
+			else
+				Cms::setFlash('The password is incorrect');
+
+			$this->redirect($_POST['returnUrl']);
+		}
+	}
+
 	public function accessRules() {
 		return array(
 				array('allow',
-					'actions'=>array('view'),
+					'actions'=>array('view', 'auth'),
 					'users'=>array('*'),
 					),
 				array('allow',
@@ -72,6 +92,18 @@ class SitecontentController extends Controller
 						));
 	}
 
+	public function checkPassword (&$model, $password, $password_repeat) {
+		if($model->visible == 2 
+				&& $password == $password_repeat) {
+			if($model->password != $password)
+				$model->password = md5($password);
+			if($password == '' && $password_repeat == '')
+				$model->password = null;
+		}
+		unset($_POST['Sitecontent']['password']);
+		unset($_POST['Sitecontent']['password_repeat']);
+	}
+
 	public function actionCreate()
 	{
 
@@ -81,28 +113,34 @@ class SitecontentController extends Controller
 		if($model->visible === null)
 			$model->visible = 3;
 
-
 		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Sitecontent']))
 		{
-			$model->attributes=$_POST['Sitecontent'];
+			$this->checkPassword($model,
+					$_POST['Sitecontent']['password'],
+					$_POST['Sitecontent']['password_repeat']);
+
+			$model->attributes = $_POST['Sitecontent'];
 			$model->createtime = time();
 			$model->updatetime = time();
 
 			if(isset(Yii::app()->user->id))
-					$model->authorid = Yii::app()->user->id;
+				$model->authorid = Yii::app()->user->id;
 
-			if($model->save())
+
+			if($model->save()) {
+				Cms::setFlash('The page has been created');
 				$this->redirect(array('admin'));
+			}
 		}
 
 		if(isset($_GET['position']))
 			$model->position = $_GET['position'];
 
 		$this->render('create',array(
-			'model'=>$model,
-		));
+					'model'=>$model,
+					));
 	}
 
 	public function actionUpdate()
@@ -114,15 +152,21 @@ class SitecontentController extends Controller
 
 		if(isset($_POST['Sitecontent']))
 		{
+			$this->checkPassword($model,
+					$_POST['Sitecontent']['password'],
+					$_POST['Sitecontent']['password_repeat']);
+
 			$model->attributes=$_POST['Sitecontent'];
 			$model->updatetime = time();
-			if($model->save())
+			if($model->save()) {
+				Cms::setFlash('The page has been updated');
 				$this->redirect(array('admin'));
+			}
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
-		));
+					'model'=>$model,
+					));
 	}
 
 	public function actionDelete()
@@ -142,8 +186,8 @@ class SitecontentController extends Controller
 	{
 		$dataProvider=new CActiveDataProvider('Sitecontent');
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+					'dataProvider'=>$dataProvider,
+					));
 	}
 
 	public function actionAdmin()
@@ -154,8 +198,8 @@ class SitecontentController extends Controller
 			$model->attributes=$_GET['Sitecontent'];
 
 		$this->render('admin',array(
-			'model'=>$model,
-		));
+					'model'=>$model,
+					));
 	}
 
 	public function loadContent()
@@ -183,13 +227,14 @@ class SitecontentController extends Controller
 
 		if($this->_model) {
 			if(!Yii::app()->user->isAdmin()) {
-				if(Yii::app()->user->isGuest && $this->_model->visible != 3) 
-					throw new CHttpException(403, Cms::t('This page is not available to the public'));
+				if(Yii::app()->user->isGuest && !$this->_model->isVisible()) 
+					throw new CHttpException(403, Cms::t(
+								'This page is not available to the public'));
 
 				else if(!Yii::app()->user->isGuest 
-						&& $this->_model->visible != 2
-						&& $this->_model->visible != 3)
-					throw new CHttpException(403, Cms::t('Only authenticated members can view this resource'));
+						&& !$this->_model->isVisible())
+					throw new CHttpException(403, Cms::t(
+								'Only authenticated members can view this resource'));
 			}
 		}
 

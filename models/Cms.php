@@ -4,6 +4,49 @@ Yii::import('application.modules.cms.models.*');
 Yii::import('application.modules.cms.controllers.*');
 
 class Cms {
+	/* set a flash message to display after the request is done */
+	public static function setFlash($message, $delay = 5000) 
+	{
+		$_SESSION['cms_message'] = Cms::t($message);
+		$_SESSION['cms_delay'] = $delay;
+	}
+
+	public static function hasFlash() 
+	{
+		return isset($_SESSION['cms_message']);
+	}
+
+	/* retrieve the flash message again */
+	public static function getFlash() {
+		if(Cms::hasFlash()) {
+			$message = @$_SESSION['cms_message'];
+			unset($_SESSION['cms_message']);
+			return $message;
+		}
+	}
+
+	/* A wrapper for the Yii::log function. If no category is given, we
+	 * use the YumController as a fallback value.
+	 * In addition to that, the message is being translated by Yum::t() */
+	public static function log($message,
+			$level = 'info',
+			$category = 'application.modules.cms.controllers.SitecontentController') {
+			return Yii::log(Cms::t($message), $level, $category);
+	}
+
+	public static function renderFlash()
+	{
+		if(Cms::hasFlash()) {
+			echo '<div class="info">';
+			echo Cms::getFlash();
+			echo '</div>';
+			Yii::app()->clientScript->registerScript('fade',"
+					setTimeout(function() { $('.info').fadeOut('slow'); },
+						{$_SESSION['cms_delay']});	
+					"); 
+		}
+	}
+
 	public static function module() {
 		return Yii::app()->getModule('cms');
 
@@ -55,13 +98,21 @@ class Cms {
 			if(!$sitecontent && Cms::module()->strict404raising)
 				throw new CHttpException(404);
 
-			if ($render && $sitecontent->visible != 3)
+			if ($render && !$sitecontent->isVisible())
 				throw new CHttpException(403);
 
 			if($sitecontent)
 				return $sitecontent->content;	
 		}
 	}
+
+	public static function authDialog($label) {
+		return Yii::app()->controller->renderPartial(
+				'application.modules.cms.views.sitecontent.authdialog', array(
+					'label' => $label), true, true);
+
+	}
+
 
 	// for usage in CMenu Widget
 	public static function getMenuPoints($id,
@@ -85,7 +136,7 @@ class Cms {
 		if($childs)  {
 			foreach($sitecontent->childs as $child) {
 				$items[] = array(
-						'visible' => $child->visible,
+						'visible' => $child->isVisible(),
 						'active' => isset($_GET['page']) && Cms::isMenuPointActive($child, $_GET['page']),
 						'label' => $child->title,
 						'url' => array($route, 'page' => $child->title_url)

@@ -52,6 +52,33 @@ if(!$metatags)
 <?php echo $form->error($model,'visible'); ?>
 </div>
 
+<div class="row password" style="display: none;">
+<?php echo $form->labelEx($model,'password'); ?>
+<?php echo $form->passwordField($model, 'password'); ?>
+<?php echo $form->labelEx($model,'password_repeat'); ?>
+<?php echo $form->passwordField($model, 'password_repeat'); ?>
+<div class="hint">
+<?php echo Cms::t('Enter a password to allow access by password'); ?>
+</div>
+<div class="hint">
+<?php echo Cms::t('Leave it empty to only allow access by non-guest users'); ?>
+</div>
+<?php echo $form->error($model,'password'); ?>
+</div>
+
+
+<?php Yii::app()->clientScript->registerScript('dropdown_visible', "
+	if($('#Sitecontent_visible').val() == 2)
+		$('.password').show();
+$('#Sitecontent_visible').change(function() {
+	if($(this).val() == 2)
+		$('.password').show(500);
+	else
+		$('.password').hide(500);
+});
+");
+?>
+
 
 <div class="row">
 <?php echo $form->labelEx($model,'position'); ?>

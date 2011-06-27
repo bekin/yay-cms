@@ -17,7 +17,7 @@ $this->menu=array(
 
 ?>
 
-<h2><?php echo Yii::t('CmsModule.cms', 'Manage Sitecontent'); ?></h2>
+<h2><?php echo Cms::t('Manage Sitecontent'); ?></h2>
 
 <?php 
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -60,4 +60,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 			)); ?>
 
-<?php echo CHtml::link(Cms::t('Create new Sitecontent'), array('//cms/sitecontent/create')); ?>
+			<?php echo CHtml::link(
+					Cms::t('Create new Sitecontent'), array(
+						'//cms/sitecontent/create')); ?>
