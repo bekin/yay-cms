@@ -2,9 +2,27 @@
 
 class Sitecontent extends CActiveRecord
 {
+	public $password;
+	public $password_repeat;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function isVisible() {
+		if($this->visible == 3)
+			return true;
+		else if($this->visible == 2) {
+			if(Yii::app()->user->hasState('yay_cms_password')) {
+				$pwd = Yii::app()->user->getState('yay_cms_password');
+				if($this->password === null && !Yii::app()->user->isGuest)
+					return true;
+				else if ($pwd == $this->password)
+					return true;
+			}
+		}	
+		return false;
 	}
 
 	public function primaryKey() {
@@ -41,6 +59,9 @@ class Sitecontent extends CActiveRecord
 			$purifier = new CHtmlPurifier();
 			$this->content = $purifier->purify($this->content);
 		}	
+
+		if($this->visible == 2)
+			$this->scenario = 'restricted';
 		return parent::beforeValidate();	
 	}
 
@@ -73,6 +94,8 @@ public function getChildTitles() {
 		return array(
 				array('id, position, title, language', 'required'),
 				array('parent, position, createtime, updatetime, visible', 'numerical', 'integerOnly'=>true),
+				array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
+				array('password, password_repeat', 'safe'),
 				array('title', 'length', 'max'=>255),
 				array('metatags', 'safe'),
 				array('content, title_url, title_browser', 'safe'),
@@ -103,6 +126,8 @@ public function getChildTitles() {
 				'updatetime' => Yii::t('CmsModule.cms', 'Updatetime'),
 				'language' => Yii::t('CmsModule.cms', 'Language'),
 				'visible' => Yii::t('CmsModule.cms', 'Visible'),
+				'password' => Cms::t('Password'),
+				'password_repeat' => Cms::t('Repeat Password'),
 				);
 	}
 

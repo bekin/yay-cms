@@ -30,7 +30,8 @@
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
             'links'=>$this->breadcrumbs,
         )); ?><!-- breadcrumbs -->
-        
+       
+			<?php echo Cms::renderFlash(); ?> 
         
     	<div id="content">
         	<?php echo $content; ?>

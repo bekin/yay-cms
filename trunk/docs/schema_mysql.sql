@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `sitecontent` (
   `title_url` varchar(80) NOT NULL,
   `title_browser` varchar(80) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `content` text NOT NULL,
   `createtime` int(11) DEFAULT NULL,
   `updatetime` int(11) DEFAULT NULL,
