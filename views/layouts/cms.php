@@ -12,7 +12,8 @@
 <body id="cms">
 	<div id="container">
     	<div id="header">
-        	<h1><a href="#">YII CMS</a></h1>
+        	<h1><?php echo Chtml::link('Yiicms',array(
+			Cms::module()->sitecontentAdminRoute))  ?></h1>
         </div>
         
         <div id="navigation">
