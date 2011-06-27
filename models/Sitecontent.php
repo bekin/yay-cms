@@ -124,6 +124,9 @@ public function getChildTitles() {
 
 		return new CActiveDataProvider('Sitecontent', array(
 					'criteria'=>$criteria,
+					'pagination' => array(
+						'pageSize' => 25 
+						)
 					));
 	}
 }
