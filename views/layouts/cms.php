@@ -9,28 +9,40 @@
     <?php Cms::register('cms.css'); ?>
 </head>
 
-<body>
-	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-		'links'=>$this->breadcrumbs,
-	)); ?><!-- breadcrumbs -->
-
-	<?php echo $content; ?>
-
-	<div style="float:right;">
-		<?php 
-			$this->widget('zii.widgets.CMenu',array(
-				'items'=>$this->menu
-				)
-			);
-		?>
-	</div>
-
-	<div class="clear"> </div>
-
-	<div id="footer">
-		<p> CMS Module by thyseus@gmail.com </p>
-		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
+<body id="cms">
+	<div id="container">
+    	<div id="header">
+        	<h1><a href="#">YII CMS</a></h1>
+        </div>
+        
+        <div id="navigation">
+            <?php 
+                $this->widget('zii.widgets.CMenu',array(
+                    'items'=>$this->menu
+                    )
+                );
+            ?>
+        </div><!-- navigation -->
+    
+        <div class="clear"> </div>
+        
+		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
+            'links'=>$this->breadcrumbs,
+        )); ?><!-- breadcrumbs -->
+        
+        
+    	<div id="content">
+        	<?php echo $content; ?>
+    	</div><!-- content -->
+         
+    	<div class="clear"> </div>
+       
+    
+        <div id="footer">
+            <p> CMS Module by thyseus@gmail.com </p>
+            <?php echo Yii::powered(); ?>
+        </div><!-- footer -->
+    </div><!-- container -->
 
 
 </body>
