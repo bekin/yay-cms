@@ -1,11 +1,19 @@
 <?php
-$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-    'id'=>'cms-auth-dialog',
-    'options'=>array(
+
+
+$dialogOptions = array_merge($dialogOptions, array(
         'title'=>Cms::t('Please enter the password'),
-        'autoOpen'=>false,
-    ),
-));
+        'autoOpen'=>false));
+
+$options = array_merge($options, array(
+    'id'=>'cms-auth-dialog',
+    'options'=> $dialogOptions,
+ ));
+
+
+
+ 
+$this->beginWidget('zii.widgets.jui.CJuiDialog', $options );
 
 		echo Cms::t('Please enter a Password to open this resource');
 		echo '<br /><hr /><br />';

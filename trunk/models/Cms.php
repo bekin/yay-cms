@@ -51,6 +51,7 @@ class Cms {
 		return Yii::app()->getModule('cms');
 
 	}
+
 	public static function register($file)
 	{
 		$path = Yii::app()->getAssetManager()->publish(
@@ -106,11 +107,14 @@ class Cms {
 		}
 	}
 
-	public static function authDialog($label) {
+	public static function authDialog($label,
+			$options = array(),
+			$dialogOptions = array()) {
 		return Yii::app()->controller->renderPartial(
 				'application.modules.cms.views.sitecontent.authdialog', array(
+					'options' => $options,
+					'dialogOptions' => $dialogOptions,
 					'label' => $label), true, true);
-
 	}
 
 
