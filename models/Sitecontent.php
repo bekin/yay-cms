@@ -16,11 +16,12 @@ class Sitecontent extends CActiveRecord
 		else if($this->visible == 2) {
 			if(Yii::app()->user->hasState('yay_cms_password')) {
 				$pwd = Yii::app()->user->getState('yay_cms_password');
-				if($this->password === null && !Yii::app()->user->isGuest)
-					return true;
-				else if ($pwd == $this->password)
+				if ($pwd == $this->password)
 					return true;
 			}
+			if($this->password === null && !Yii::app()->user->isGuest)
+				return true;
+
 		}	
 		return false;
 	}
