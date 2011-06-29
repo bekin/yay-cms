@@ -58,7 +58,7 @@ return array(
 		'Create' => 'Erstellen',
 		'Save' => 'Speichern',
 		'Update' => 'Bearbeite',
-		'' => '',
+		'Site options' => 'Seitenoptionen',
 		'' => '',
 		'' => '',
 		'' => '',

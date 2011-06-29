@@ -69,6 +69,8 @@ table, td, th 				{vertical-align:middle;}
 .nobullet      				{list-style:none;list-style-image:none;}
 
 /***** Design *****/
+
+/***** elements *****/
 #cms hr{border:0px; border-top: dotted 1px #d9d9d9; border-bottom: solid 1px #ffffff; margin: 10px 0;}
 
 #cms legend { font-size:1.5em; font-weight:bold;}
@@ -90,7 +92,6 @@ table, td, th 				{vertical-align:middle;}
 #cms textarea:focus,
 #cms select:focus 			{background-color: #FFFFCC;}
 
-
 #cms input[type=checkbox],
 #cms input[type=radio],
 #cms input.checkbox,
@@ -98,7 +99,6 @@ table, td, th 				{vertical-align:middle;}
 
 #cms input[type=button],
 #cms input[type="submit"]	{cursor: pointer;}
-
 
 #cms a,
 #cms a:link,
@@ -108,6 +108,7 @@ table, td, th 				{vertical-align:middle;}
 #cms a:hover,
 #cms a:active{ text-decoration:none;}
 
+/***** container *****/
 #cms div.breadcrumbs {padding-bottom:10px;}
 #cms div.buttons { clear:both; float:right;}
 
@@ -140,4 +141,8 @@ table, td, th 				{vertical-align:middle;}
 #cms #footer a:hover,
 #cms #footer a:active{ text-decoration:none;}
 
+
+/***** specific *****/
+#cms fieldset.box-fieldset-right {float: right; width: 450px;}
+#cms fieldset.box-fieldset-right {float: left; width: 450px;}
 .password { display: none; }
