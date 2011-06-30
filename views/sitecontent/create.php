@@ -6,16 +6,12 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 		array(
-			'label'=>Yii::t('CmsModule.cms', 'Manage Menustructure'), 
-			'url'=>array('menustructure/admin')
-			),
-		array(
-			'label'=>Yii::t('CmsModule.cms', 'Manage Sitecontent'), 
-			'url'=>array('sitecontent/admin')
+			'label'=>Cms::t('Manage Sitecontent'), 
+			'url'=>array('admin')
 			),
 );
 ?>
 
-<h2><?php echo Yii::t('CmsModule.cms', 'Create new Sitecontent'); ?></h2>
+<h2><?php echo Cms::t('Create new Sitecontent'); ?></h2>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

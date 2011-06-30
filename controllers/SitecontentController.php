@@ -4,6 +4,7 @@ Yii::import('application.modules.cms.models.Sitecontent');
 class SitecontentController extends Controller
 {
 	public $defaultAction='admin';
+	public $pageTitle = '';
 	private $_model;
 
 	public function beforeAction($action)
@@ -74,10 +75,15 @@ class SitecontentController extends Controller
 	{
 		$model = $this->loadContent();
 
+		if($model->title_browser)
+			$this->pageTitle = $model->title_browser;
+
 		if($model->metatags)
-			foreach($model->metatags as $tag => $content) 
-				if($content)
-					Yii::app()->clientScript->registerMetaTag($content, $tag);
+			foreach($model->metatags as $tag => $content)  {
+				if($content == '' && isset(Cms::module()->defaultMetaTags[$tag]))
+					$content = Cms::module()->defaultMetaTags[$tag];					
+				Yii::app()->clientScript->registerMetaTag($content, $tag);
+			}
 
 		if(!isset($this->breadcrumbs))
 			$this->breadcrumbs = array($model->title);
