@@ -30,6 +30,8 @@ class CmsModule extends CWebModule
 	public $allowedMetaTags = array(
 			'description', 'keywords', 'author', 'revised');
 
+	public $defaultMetaTags = array();
+
 	// If a page is requested by CMS::render and not found, should
 	// a 404 be raised or the content simply not be delivered?
 	public $strict404raising = false;

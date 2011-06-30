@@ -25,11 +25,18 @@
                     $metatags = array();
     
                 foreach(Cms::module()->allowedMetaTags as $metatag) {
-                    echo '<div class="row">';
-                    echo $form->labelEx($model, $metatag);	
-                    echo CHtml::textField("Sitecontent[metatags][$metatag]", 
-                            isset($metatags[$metatag]) ? (string) $metatags[$metatag] : '');	
-                    echo $form->error($model, $metatag);	
+									echo '<div class="row">';
+									echo $form->labelEx($model, $metatag);	
+									$value = '';
+									if(isset($metatags[$metatag]))
+										$value = $metatags[$metatag];
+
+									if($value == '' && isset(Cms::module()->defaultMetaTags[$metatag]))
+										$value = Cms::module()->defaultMetaTags[$metatag];
+
+									echo CHtml::textField("Sitecontent[metatags][$metatag]", 
+											$value);
+									echo $form->error($model, $metatag);	
                 }
             ?>
         </fieldset>
