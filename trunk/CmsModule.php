@@ -21,7 +21,6 @@ class CmsModule extends CWebModule
 
 	public $ckfinderPath = false; // do not use CKFinder
 
-
 	// Which languages do your cms serve?
 	public $languages = array('en' => 'English');
 
@@ -36,6 +35,7 @@ class CmsModule extends CWebModule
 	// a 404 be raised or the content simply not be delivered?
 	public $strict404raising = false;
 
+	public $sitecontentViewRoute = '//cms/sitecontent/view';
 	public $sitecontentCreateRoute = '//cms/sitecontent/create';
 	public $sitecontentUpdateRoute = '//cms/sitecontent/update';
 	public $sitecontentAdminRoute = '//cms/sitecontent/admin';

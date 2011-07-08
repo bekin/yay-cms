@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `sitecontent` (
 	`language` varchar(5) NOT NULL,
   `position` int(10) unsigned NOT NULL,
   `metatags` text NULL,
+  `redirect` varchar(255) NULL,
   `visible` int(10) NOT NULL,
   `title_url` varchar(80) NOT NULL,
   `title_browser` varchar(80) NOT NULL,

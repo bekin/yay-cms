@@ -1,5 +1,8 @@
 <?php
 return array(
+'Redirect to self is not allowed' => 'Eine Weiterleitung auf sich selbst ist nicht möglich',
+'Redirect' => 'Weiterleitung auf',
+'The requested page does not exist' => 'Die angeforderte Seite konnte nicht gefunden werden',
 'The page has been created' => 'Die Seite wurde angelegt',
 'The page has been updated' => 'Die Änderungen wurden gespeichert',
 		'The password is correct' => 'Das Passwort ist korrekt',

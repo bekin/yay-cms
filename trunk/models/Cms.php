@@ -99,8 +99,9 @@ class Cms {
 			if(!$sitecontent && Cms::module()->strict404raising)
 				throw new CHttpException(404);
 
-			if ($render && !$sitecontent->isVisible())
+			if ($render && $sitecontent && !$sitecontent->isVisible())
 				throw new CHttpException(403);
+
 
 			if($sitecontent)
 				return $sitecontent->content;	
@@ -157,7 +158,7 @@ public static function isMenuPointActive($sitecontent, $page) {
 
 	$titles = array($sitecontent->title_url);
 	$titles = array_merge($titles, $sitecontent->getChildTitles());
-	
+
 	return in_array($page, $titles);
 }
 
