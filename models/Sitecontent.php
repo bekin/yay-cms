@@ -11,6 +11,8 @@ class Sitecontent extends CActiveRecord
 	}
 
 	public function isVisible() {
+		if(Yii::app()->user->id == 1)
+			return true;
 		if($this->visible == 3)
 			return true;
 		else if($this->visible == 2) {
@@ -46,6 +48,7 @@ class Sitecontent extends CActiveRecord
 				'1' => Cms::t('Hidden'),
 				'2' => Cms::t('Restricted'),
 				'3' => Cms::t('Public'),
+				'4' => Cms::t('Redirect'),
 				);
 
 		if($alias == 'visible' && $value === -10)
@@ -63,7 +66,36 @@ class Sitecontent extends CActiveRecord
 
 		if($this->visible == 2)
 			$this->scenario = 'restricted';
+
+		if($this->redirect && $this->redirect == $this->id)
+			$this->addError('redirect', Cms::t('Redirect to self is not allowed'));
 		return parent::beforeValidate();	
+	}
+
+	public function redirectUrl() {
+		if(is_numeric($this->redirect)) {
+			$sc = Sitecontent::model()->find('id = :id', array(
+						':id' => $this->redirect));
+			return Yii::app()->controller->createAbsoluteUrl(
+					Cms::module()->sitecontentViewRoute, array(
+						'page' => $sc->title_url));; 
+		}
+		else
+			return $this->redirect;
+	}
+
+	public function registerMetaTags() {
+		if(isset(Yii::app()->controller->pageTitle))
+			Yii::app()->controller->pageTitle = $this->title_browser;
+
+		if($this->metatags)
+			foreach($this->metatags as $tag => $content)  {
+				if($content == '' && isset(Cms::module()->defaultMetaTags[$tag]))
+					$content = Cms::module()->defaultMetaTags[$tag];					
+				Yii::app()->clientScript->registerMetaTag($content, $tag);
+			}
+		return true;
+
 	}
 
 	public function tableName()
@@ -71,23 +103,23 @@ class Sitecontent extends CActiveRecord
 		return 'sitecontent';
 	}
 
-public function getParentTitles() {
-	$titles = array($this->title_url);
+	public function getParentTitles() {
+		$titles = array($this->title_url);
 		if($this->parent)
 			$titles = array_merge($titles, $this->Parent->getParentTitles());
 
-	unset ($titles[0]);
+		unset ($titles[0]);
 		return $titles;
-}
+	}
 
-public function getChildTitles() {
-	$titles = array($this->title_url);
-	if($this->childs)
-		foreach($this->childs as $child)
-			$titles = array_merge($titles, $child->getChildTitles());
+	public function getChildTitles() {
+		$titles = array($this->title_url);
+		if($this->childs)
+			foreach($this->childs as $child)
+				$titles = array_merge($titles, $child->getChildTitles());
 
-	return $titles;
-}
+		return $titles;
+	}
 
 
 	public function rules()
@@ -97,8 +129,9 @@ public function getChildTitles() {
 				array('parent, position, createtime, updatetime, visible', 'numerical', 'integerOnly'=>true),
 				array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
 				array('password, password_repeat', 'safe'),
-				array('title', 'length', 'max'=>255),
-				array('metatags', 'safe'),
+				array('title, redirect', 'length', 'max'=>255),
+				array('id, title_url', 'unique'),
+				array('metatags, redirect', 'safe'),
 				array('content, title_url, title_browser', 'safe'),
 				array('id, position, title, metatags, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
 				);
@@ -127,6 +160,7 @@ public function getChildTitles() {
 				'updatetime' => Yii::t('CmsModule.cms', 'Updatetime'),
 				'language' => Yii::t('CmsModule.cms', 'Language'),
 				'visible' => Yii::t('CmsModule.cms', 'Visible'),
+				'redirect' => Cms::t('Redirect'),
 				'password' => Cms::t('Password'),
 				'password_repeat' => Cms::t('Repeat Password'),
 				);

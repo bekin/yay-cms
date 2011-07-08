@@ -47,6 +47,13 @@
             <legend ><?php echo Cms::t('Site options'); ?></legend>
             
             <div class="row">
+                <?php echo $form->labelEx($model,'id'); ?>
+                <?php echo $form->textField($model,'id',array('size'=>5,'maxlength'=>11)); ?>
+                <?php echo $form->error($model,'id'); ?>
+            </div>
+    
+
+            <div class="row">
                 <?php echo $form->labelEx($model,'parent'); ?>
                 <?php echo CHtml::activeDropDownList($model,
                         'parent',
@@ -66,6 +73,25 @@
                 <?php echo $form->error($model,'visible'); ?>
             </div>
     
+    
+            <div class="row redirect" style="display: none;">
+						<?php echo $form->labelEx($model,'redirect'); ?>
+						<?php echo $form->dropDownList($model,'redirect',
+								CHtml::listData(Sitecontent::model()->findAll(), 'id', 'title'),
+								array(
+									'empty' => Cms::t('Absolute url')
+									)); ?>
+
+            <div class="row redirect_absolute" style="display: none;">
+						<?php echo $form->labelEx($model,'redirect'); ?>
+						<?php echo $form->textField($model,'redirect',array(
+									'id' => 'Sitecontent_redirect_absolute',
+									'size'=>40,
+									'maxlength'=>255)); ?>
+						</div>
+						<?php echo $form->error($model,'redirect'); ?>
+						</div>
+
             <div class="row password" style="display: none;">
                 <?php echo $form->labelEx($model,'password'); ?>
                 <?php echo $form->passwordField($model, 'password'); ?>
@@ -87,11 +113,32 @@
             <?php Yii::app()->clientScript->registerScript('dropdown_visible', "
                 if($('#Sitecontent_visible').val() == 2)
                     $('.password').show();
+                if($('#Sitecontent_visible').val() == 4)
+                    $('.redirect').show();
+
+										if($('#Sitecontent_redirect').val() == 0)
+										$('.redirect_absolute').show();
+
+
+            $('#Sitecontent_redirect').change(function() {
+								$('#Sitecontent_redirect_absolute').val($(this).val());
+
+	                if($(this).val() == 0)
+                    $('.redirect_absolute').show(500);
+                else
+                    $('.redirect_absolute').hide(500);
+						});
             $('#Sitecontent_visible').change(function() {
+								$('#Sitecontent_redirect_absolute').val('');
                 if($(this).val() == 2)
                     $('.password').show(500);
                 else
                     $('.password').hide(500);
+                if($(this).val() == 4)
+                    $('.redirect').show(500);
+                else
+                    $('.redirect').hide(500);
+
             });
             ");
             ?>
@@ -103,12 +150,6 @@
                         $model->position,
                         $position); ?>
                 <?php echo $form->error($model,'position'); ?>
-            </div>
-    
-            <div class="row">
-                <?php echo $form->labelEx($model,'id'); ?>
-                <?php echo $form->textField($model,'id',array('size'=>5,'maxlength'=>11)); ?>
-                <?php echo $form->error($model,'id'); ?>
             </div>
     
             <div class="row">

@@ -1,8 +1,8 @@
 <?php                                                                           
 if(isset($sc))
- $this->pageTitle = $sc->title . ' - ' . Yii::app()->name;
+ $this->pageTitle = $sc->title_browser . ' - ' . Yii::app()->name;
 if(isset($menu))
-	 $this->pageTitle = $menu->title. ' - ' . Yii::app()->name;
+	 $this->pageTitle = $menu->title_browser. ' - ' . Yii::app()->name;
 
 if(Yii::app()->user->id == 1) // is admin 
 {

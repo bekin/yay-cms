@@ -61,7 +61,7 @@ class SitecontentController extends Controller
 					'users'=>array('*'),
 					),
 				array('allow',
-					'actions'=>array('update', 'create', 'admin'),
+					'actions'=>array('update', 'create', 'admin', 'delete'),
 					'users'=>array('admin'),
 					),
 				array('deny',  // deny all other users
@@ -75,15 +75,14 @@ class SitecontentController extends Controller
 	{
 		$model = $this->loadContent();
 
+		if($model->redirect !== null) 
+			$this->redirect($model->redirectUrl());
+
 		if($model->title_browser)
 			$this->pageTitle = $model->title_browser;
 
-		if($model->metatags)
-			foreach($model->metatags as $tag => $content)  {
-				if($content == '' && isset(Cms::module()->defaultMetaTags[$tag]))
-					$content = Cms::module()->defaultMetaTags[$tag];					
-				Yii::app()->clientScript->registerMetaTag($content, $tag);
-			}
+		$model->registerMetaTags();
+
 
 		if(!isset($this->breadcrumbs))
 			$this->breadcrumbs = array($model->title);
@@ -99,7 +98,7 @@ class SitecontentController extends Controller
 	}
 
 	public function checkPassword (&$model, $password, $password_repeat) {
-		if($model->visible == 2 
+		if(($model->visible == 2 || $model->isNewRecord)
 				&& $password == $password_repeat) {
 			if($model->password != $password)
 				$model->password = md5($password);
@@ -123,11 +122,12 @@ class SitecontentController extends Controller
 
 		if(isset($_POST['Sitecontent']))
 		{
+			$model->attributes = $_POST['Sitecontent'];
 			$this->checkPassword($model,
 					$_POST['Sitecontent']['password'],
 					$_POST['Sitecontent']['password_repeat']);
 
-			$model->attributes = $_POST['Sitecontent'];
+
 			$model->createtime = time();
 			$model->updatetime = time();
 
@@ -158,11 +158,11 @@ class SitecontentController extends Controller
 
 		if(isset($_POST['Sitecontent']))
 		{
+			$model->attributes=$_POST['Sitecontent'];
 			$this->checkPassword($model,
 					$_POST['Sitecontent']['password'],
 					$_POST['Sitecontent']['password_repeat']);
 
-			$model->attributes=$_POST['Sitecontent'];
 			$model->updatetime = time();
 			if($model->save()) {
 				Cms::setFlash('The page has been updated');
@@ -178,12 +178,7 @@ class SitecontentController extends Controller
 	public function actionDelete()
 	{
 		if(Yii::app()->request->isPostRequest)
-		{
 			$this->loadContent()->delete();
-
-			if(!isset($_POST['ajax']))
-				$this->redirect(array('index'));
-		}
 		else
 			throw new CHttpException(400,Yii::t('App','Invalid request. Please do not repeat this request again.'));
 	}
@@ -228,7 +223,7 @@ class SitecontentController extends Controller
 
 			if($this->_model===null)
 				throw new CHttpException(404,Cms::t(
-							'The requested page does not exist.'));
+							'The requested page does not exist'));
 		} 
 
 		if($this->_model) {
