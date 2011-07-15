@@ -146,7 +146,7 @@ table, td, th 				{vertical-align:middle;}
 #cms div.box-form-right {float: right; width: 300px;}
 #cms div.box-form-left {float: left; width: 600px;}
 
-#cms div.box-form-right label { width:90px;}
+#cms div.box-form-right label { width:250px;}
 #cms div.box-form-left label { width:170px;}
 
 #cms .form select { width:250px;}

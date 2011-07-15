@@ -36,7 +36,8 @@
 
 									echo CHtml::textField("Sitecontent[metatags][$metatag]", 
 											$value);
-									echo $form->error($model, $metatag);	
+									echo $form->error($model, $metatag);
+									echo '</div>';	
                 }
             ?>
         </fieldset>
