@@ -144,7 +144,7 @@ class Cms {
 						'visible' => $child->isVisible(),
 						'active' => isset($_GET['page']) && Cms::isMenuPointActive($child, $_GET['page']),
 						'label' => $child->title,
-						'url' => array($route, 'page' => $child->title_url)
+						'url' => $child->getUrl($route),
 						);
 			}
 		}
