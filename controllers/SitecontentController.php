@@ -75,7 +75,7 @@ class SitecontentController extends Controller
 	{
 		$model = $this->loadContent();
 
-		if($model->redirect !== null) 
+		if($model->visible == 4 && $model->redirect !== null) 
 			$this->redirect($model->redirectUrl());
 
 		if($model->title_browser)
