@@ -73,7 +73,6 @@ class SitecontentController extends Controller
 
 	public function actionView($ajax = false)
 	{
-	die ('jo');
 		$model = $this->loadContent();
 
 		if($model->redirect !== null) 

@@ -10,6 +10,7 @@ class CmsModule extends CWebModule
 	public $enableHtmlPurifier = true;
 	public $rtepath = false; // Don't use an Rich text Editor
 	public $rteadapter = false; // Don't use an Adapter
+	public $ckfinderpath = false; // do not use CKFinder
 
 	/* Script snippet to be executed. Examples are:
 		 tinyMCE.init({ mode : "textareas", theme : "simple" }); ',
@@ -19,7 +20,6 @@ class CmsModule extends CWebModule
 
 	public $rtescript = false;
 
-	public $ckfinderPath = false; // do not use CKFinder
 
 	// Which languages do your cms serve?
 	public $languages = array('en' => 'English');
