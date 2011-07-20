@@ -103,20 +103,31 @@ class Sitecontent extends CActiveRecord
 		return 'sitecontent';
 	}
 
-	public function getParentTitles() {
-		$titles = array($this->title_url);
-		if($this->parent)
-			$titles = array_merge($titles, $this->Parent->getParentTitles());
+	public function getBreadcrumbs($route = '//cms/sitecontent/view') {
+		$breadcrumbs = array();
+	$breadcrumbs[$this->title] = $this->getAbsoluteUrl($route);
 
-		unset ($titles[0]);
-		return $titles;
-	}
+	return $breadcrumbs;
+}
+
+public function getAbsoluteUrl($route = '//cms/sitecontent/view') {
+return Yii::app()->controller->createAbsoluteUrl($route, array(
+			'page' => $this->title_url));
+}
+
+public function getParentTitles() {
+	$titles = array($this->title_url);
+	if($this->parent)
+		$titles = array_merge($titles, $this->Parent->getParentTitles());
+
+	unset ($titles[0]);
+	return $titles;
+}
 
 	public function getUrl($route = '//cms/sitecontent/view') {
 		if($this->visible == 4)
 			return $this->redirectUrl();
-	return Yii::app()->controller->createAbsoluteUrl($route, array(
-				'page' => $this->title_url));
+	return $this->getAbsoluteUrl($route);
 }
 
 

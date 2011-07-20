@@ -102,7 +102,6 @@ class Cms {
 			if ($render && $sitecontent && !$sitecontent->isVisible())
 				throw new CHttpException(403);
 
-
 			if($sitecontent)
 				return $sitecontent->content;	
 		}
