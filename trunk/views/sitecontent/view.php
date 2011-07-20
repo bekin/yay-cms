@@ -1,8 +1,10 @@
 <?php                                                                           
 if(isset($sc))
- $this->pageTitle = $sc->title_browser . ' - ' . Yii::app()->name;
+ $this->pageTitle = $sc->title_browser; 
 if(isset($menu))
-	 $this->pageTitle = $menu->title_browser. ' - ' . Yii::app()->name;
+	 $this->pageTitle = $menu->title_browser;
+if(isset($this->breadcrumbs))
+	$this->breadcrumbs = $sitecontent->getBreadcrumbs();
 
 if(Yii::app()->user->id == 1) // is admin 
 {
