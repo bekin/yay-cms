@@ -31,7 +31,7 @@ class Cms {
 	public static function log($message,
 			$level = 'info',
 			$category = 'application.modules.cms.controllers.SitecontentController') {
-			return Yii::log(Cms::t($message), $level, $category);
+		return Yii::log(Cms::t($message), $level, $category);
 	}
 
 	public static function renderFlash()

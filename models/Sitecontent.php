@@ -148,7 +148,6 @@ public function rules()
 			array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
 			array('password, password_repeat', 'safe'),
 			array('title, redirect', 'length', 'max'=>255),
-			array('id, title_url', 'unique'),
 			array('metatags, redirect', 'safe'),
 			array('content, title_url, title_browser', 'safe'),
 			array('id, position, title, metatags, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
