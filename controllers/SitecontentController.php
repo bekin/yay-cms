@@ -111,7 +111,6 @@ class SitecontentController extends Controller
 
 	public function actionCreate()
 	{
-
 		$this->layout = Cms::module()->adminLayout;
 		$model = new Sitecontent;
 
@@ -144,10 +143,14 @@ class SitecontentController extends Controller
 		if(isset($_GET['position']))
 			$model->position = $_GET['position'];
 
+		if(!isset($model->id) || $model->id === null)
+			$model->id = Sitecontent::nextAvailableId();
+
 		$this->render('create',array(
 					'model'=>$model,
 					));
 	}
+
 
 	public function actionUpdate()
 	{

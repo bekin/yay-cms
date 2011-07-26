@@ -1,10 +1,11 @@
 <?php
 return array(
-'Redirect to self is not allowed' => 'Eine Weiterleitung auf sich selbst ist nicht möglich',
-'Redirect' => 'Weiterleitung auf',
-'The requested page does not exist' => 'Die angeforderte Seite konnte nicht gefunden werden',
-'The page has been created' => 'Die Seite wurde angelegt',
-'The page has been updated' => 'Die Änderungen wurden gespeichert',
+		'The {attribute} {id} for language {language} is already in use' => 'Feld {attribute} ({id}) ist für die Sprache {language} bereits vergeben',
+		'Redirect to self is not allowed' => 'Eine Weiterleitung auf sich selbst ist nicht möglich',
+		'Redirect' => 'Weiterleitung auf',
+		'The requested page does not exist' => 'Die angeforderte Seite konnte nicht gefunden werden',
+		'The page has been created' => 'Die Seite wurde angelegt',
+		'The page has been updated' => 'Die Änderungen wurden gespeichert',
 		'The password is correct' => 'Das Passwort ist korrekt',
 		'The password is incorrect' => 'Das Passwort ist nicht korrekt',
 		'Please enter a Password to open this resource' => 'Bitte geben Sie ein Passwort an, um diese Seite aufzurufen',

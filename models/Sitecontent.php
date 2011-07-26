@@ -103,6 +103,15 @@ class Sitecontent extends CActiveRecord
 		return 'sitecontent';
 	}
 
+	public static function nextAvailableId() {
+		$sql = "select id from sitecontent order by id DESC limit 1";
+		$result = Yii::app()->db->createCommand($sql)->queryColumn();
+		if(isset($result[0]))
+			return (int) $result[0] + 1;	
+		else
+			return 1;
+	}
+
 	public function getBreadcrumbs($route = '//cms/sitecontent/view') {
 		$breadcrumbs = array();
 	$breadcrumbs[$this->title] = $this->getAbsoluteUrl($route);
@@ -124,11 +133,11 @@ public function getParentTitles() {
 	return $titles;
 }
 
-	public function getUrl($route = '//cms/sitecontent/view') {
-		if($this->visible == 4)
-			return $this->redirectUrl();
+public function getUrl($route = '//cms/sitecontent/view') {
+if($this->visible == 4)
+	return $this->redirectUrl();
 	return $this->getAbsoluteUrl($route);
-}
+	}
 
 
 public function getChildTitles() {
@@ -144,6 +153,7 @@ public function rules()
 {
 	return array(
 			array('id, position, title, language', 'required'),
+			array('id, title_url', 'CmsUniqueValidator'),
 			array('parent, position, createtime, updatetime, visible', 'numerical', 'integerOnly'=>true),
 			array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
 			array('password, password_repeat', 'safe'),
