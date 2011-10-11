@@ -151,7 +151,6 @@ class SitecontentController extends Controller
 					));
 	}
 
-
 	public function actionUpdate()
 	{
 		$this->layout = Cms::module()->adminLayout;
@@ -220,8 +219,8 @@ class SitecontentController extends Controller
 							':id' => $_GET['id'],
 							));
 
-			if($this->_model === null)
-				$this->_model = Sitecontent::model()->find("title_url = :page", array(
+			if($this->_model === null && isset($_GET['page']))
+				$this->_model = Sitecontent::model()->find('title_url = :page', array(
 							':page' => $_GET['page']));
 
 			if($this->_model===null)

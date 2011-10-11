@@ -139,12 +139,13 @@ class Cms {
 		$childs = $sitecontent->childs;
 		if($childs)  {
 			foreach($sitecontent->childs as $child) {
-				$items[] = array(
-						'visible' => $child->isVisible(),
-						'active' => isset($_GET['page']) && Cms::isMenuPointActive($child, $_GET['page']),
-						'label' => $child->title,
-						'url' => $child->getUrl($route),
-						);
+				if($child->language == $lang)
+					$items[] = array(
+							'visible' => $child->isVisible(),
+							'active' => isset($_GET['page']) && Cms::isMenuPointActive($child, $_GET['page']),
+							'label' => $child->title,
+							'url' => $child->getUrl($route),
+							);
 			}
 		}
 	}
