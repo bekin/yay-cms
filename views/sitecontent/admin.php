@@ -62,4 +62,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 			<?php echo CHtml::link(
 					Cms::t('Create new Sitecontent'), array(
-						'//cms/sitecontent/create')); ?>
+						'//cms/sitecontent/create'), array('tabindex' => 1)); ?>

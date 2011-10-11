@@ -37,7 +37,7 @@ class Sitecontent extends CActiveRecord
 				'CSerializeBehavior' => array(
 					'class' => 'application.modules.cms.components.CSerializeBehavior',
 					'serialAttributes' => array(
-						'metatags')));
+						'metatags', 'images')));
 	}
 
 	public static function itemAlias($alias, $value = -10) {
@@ -69,6 +69,7 @@ class Sitecontent extends CActiveRecord
 
 		if($this->redirect && $this->redirect == $this->id)
 			$this->addError('redirect', Cms::t('Redirect to self is not allowed'));
+
 		return parent::beforeValidate();	
 	}
 
@@ -104,13 +105,34 @@ class Sitecontent extends CActiveRecord
 	}
 
 	public static function nextAvailableId() {
-		$sql = "select id from sitecontent order by id DESC limit 1";
+		$sql = 'select id from sitecontent order by id DESC limit 1';
 		$result = Yii::app()->db->createCommand($sql)->queryColumn();
 		if(isset($result[0]))
 			return (int) $result[0] + 1;	
 		else
 			return 1;
 	}
+
+	public function processImages ($images) {
+		if(isset($images['image_new']) && $images['image_new']['name'] != '') {
+			$image = $images['image_new'];
+
+			if(!in_array($image['type'], Cms::module()->allowedImageMimeTypes))
+				$this->addError('images', Cms::t(
+							'File type {mime_type} is not allowed!', array(
+								'{mime_type}' => $image['type'],
+								)));
+			else {
+				// File is valid
+				$images = $this->images;
+				$images[] = $image['name'];
+				$this->images = $images;	
+				move_uploaded_file($image['tmp_name'],
+						Cms::module()->imagePath . $image['name']);
+			}
+		}
+	}
+
 
 	public function getBreadcrumbs($route = '//cms/sitecontent/view') {
 		$breadcrumbs = array();
@@ -158,15 +180,16 @@ public function rules()
 			array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
 			array('password, password_repeat', 'safe'),
 			array('title, redirect', 'length', 'max'=>255),
-			array('metatags, redirect', 'safe'),
+			array('images, metatags, redirect', 'safe'),
 			array('content, title_url, title_browser', 'safe'),
-			array('id, position, title, metatags, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
+			array('id, position, title, metatags, images, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
 			);
 }
 
 public function relations()
 {
 	return array(
+			// Parent is uppercase to differentiate it from the column
 			'Parent' => array(self::BELONGS_TO, 'Sitecontent', 'parent'),
 			'childs' => array(self::HAS_MANY, 'Sitecontent', 'parent'),
 			);
@@ -190,6 +213,9 @@ public function attributeLabels()
 			'redirect' => Cms::t('Redirect'),
 			'password' => Cms::t('Password'),
 			'password_repeat' => Cms::t('Repeat Password'),
+			'metatags' => Cms::t('Metatags'),
+			'images' => Cms::t('Images'),
+			'image_new' => Cms::t('Upload a new Image'),	
 			);
 }
 
@@ -203,6 +229,7 @@ public function search()
 	$criteria->compare('language',$this->language);
 	$criteria->compare('title',$this->title,true);
 	$criteria->compare('metatags',$this->metatags,true);
+	$criteria->compare('images',$this->images,true);
 	$criteria->compare('content',$this->content,true);
 	$criteria->compare('authorid',$this->authorid);
 	$criteria->compare('createtime',$this->createtime);
