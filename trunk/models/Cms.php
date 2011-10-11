@@ -117,6 +117,16 @@ class Cms {
 					'label' => $label), true, true);
 	}
 
+	public static function getImage($image, $alt = '', $thumb = false) {
+		if($thumb)
+			return CHtml::image(
+					Yii::app()->baseUrl.'/'.Cms::module()->imagePath . $image, $alt,
+					array('width' => '150px'));
+		else
+			return CHtml::image(Cms::module()->imagePath . $image, $alt);
+
+	}
+
 
 	// for usage in CMenu Widget
 	public static function getMenuPoints($id,
@@ -150,6 +160,7 @@ class Cms {
 		}
 	}
 	return $items;
+
 }
 
 public static function isMenuPointActive($sitecontent, $page) {

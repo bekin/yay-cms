@@ -10,6 +10,11 @@
 	<?php $form=$this->beginWidget('CActiveForm', array(
 				'id'=>'sitecontent-form',
 				'enableAjaxValidation'=>true,
+				'enableClientValidation'=>true,
+				'htmlOptions' => array(
+					'enctype' => 'multipart/form-data'),
+				'focus'=>array($model,'title'),
+
 				));
 	?>
 
@@ -41,6 +46,51 @@
                 }
             ?>
         </fieldset>
+
+      <fieldset>
+            <legend><?php echo Cms::t('Images'); ?></legend>
+            <?php
+                $images = $model->images;
+                
+                if(!$images)
+                    $images = array();
+    
+										if($images && !$model->isNewRecord) {
+											echo '<table>';
+											foreach($images as $i => $image) {
+												printf( '<tr><td>%s</td><td>%s</td><td>%s</td>',
+														$image, Cms::getImage($image, $image, true), 
+														CHtml::link(
+															CHtml::image(
+																Yii::app()->getAssetManager()->publish(
+																	Yii::getPathOfAlias(
+																		'zii.widgets.assets.gridview').'/delete.png')),
+															array(
+																'//cms/sitecontent/deleteImage',
+																'model_id' => $model->id,
+																'language' => $model->language,
+																'image' => $image),
+															array(
+																'confirm' => Cms::t(
+																	'Are you sure you want to delete this image?')
+																)
+															)
+														);
+
+									}
+									echo '</table>';
+								}			
+else echo Cms::t('No images yet');
+									
+									echo '<hr /><div class="row">';
+									echo $form->labelEx($model, 'image_new');	
+									echo CHtml::fileField('image_new', '');
+									echo $form->error($model, 'image_new');
+									echo '</div>';	
+
+            ?>
+        </fieldset>
+
     </div>
 
 	<div class="box-form-left">
@@ -142,6 +192,22 @@
 
             });
             ");
+	if($model->isNewRecord)
+            Yii::app()->clientScript->registerScript('typeahead', "
+	$('#Sitecontent_title').keyup(function() {
+		sitecontent_title_browser = $('#Sitecontent_title_browser').val();
+		value1 = $(this).val().substr(0, sitecontent_title_browser.length);
+		sitecontent_title_url = $('#Sitecontent_title_url').val();
+		value2 = $(this).val().substr(0, sitecontent_title_url.length);
+
+		if(sitecontent_title_browser == '' || sitecontent_title_browser == value1)
+			$('#Sitecontent_title_browser').val($(this).val());
+if(sitecontent_title_url == '' || sitecontent_title_url == value2)
+			$('#Sitecontent_title_url').val($(this).val());
+
+
+});
+");
             ?>
     
             <div class="row">

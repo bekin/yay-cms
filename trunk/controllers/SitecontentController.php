@@ -61,7 +61,7 @@ class SitecontentController extends Controller
 					'users'=>array('*'),
 					),
 				array('allow',
-					'actions'=>array('update', 'create', 'admin', 'delete'),
+					'actions'=>array('update', 'create', 'admin', 'delete', 'deleteImage'),
 					'users'=>array('admin'),
 					),
 				array('deny',  // deny all other users
@@ -122,10 +122,12 @@ class SitecontentController extends Controller
 		if(isset($_POST['Sitecontent']))
 		{
 			$model->attributes = $_POST['Sitecontent'];
+
 			$this->checkPassword($model,
 					$_POST['Sitecontent']['password'],
 					$_POST['Sitecontent']['password_repeat']);
 
+			$model->processImages($_FILES);
 
 			$model->createtime = time();
 			$model->updatetime = time();
@@ -133,8 +135,7 @@ class SitecontentController extends Controller
 			if(isset(Yii::app()->user->id))
 				$model->authorid = Yii::app()->user->id;
 
-
-			if($model->save()) {
+			if($model->validate(null, false) && $model->save()) {
 				Cms::setFlash('The page has been created');
 				$this->redirect(array('admin'));
 			}
@@ -165,8 +166,11 @@ class SitecontentController extends Controller
 					$_POST['Sitecontent']['password'],
 					$_POST['Sitecontent']['password_repeat']);
 
+			$model->processImages($_FILES);
+
 			$model->updatetime = time();
-			if($model->save()) {
+
+			if($model->validate(null, false) && $model->save()) {
 				Cms::setFlash('The page has been updated');
 				$this->redirect(array('admin'));
 			}
@@ -175,6 +179,33 @@ class SitecontentController extends Controller
 		$this->render('update',array(
 					'model'=>$model,
 					));
+	}
+
+	public function actionDeleteImage($model_id, $language, $image) {
+		$model = Sitecontent::model()->find(
+				'id = :model_id and language = :language', array(
+			':model_id' => $model_id,
+			':language' => $language));
+
+		if($model && $image) {
+			$images = $model->images;
+			foreach($images as $i => $img)
+				if($image == $img)
+					unset($images[$i]);
+			$model->images = $images;
+
+			if($model->save(false, array('images')))
+				Cms::setFlash('Image has been removed');
+			else
+				Cms::setFlash('Error while removing image');
+		
+			$this->redirect(array(
+						'//cms/sitecontent/update',
+						'id' => $model_id,
+						'language' => $language));
+
+}	
+
 	}
 
 	public function actionDelete()
@@ -229,16 +260,14 @@ class SitecontentController extends Controller
 		} 
 
 		if($this->_model) {
-			if(!Yii::app()->user->isAdmin()) {
-				if(Yii::app()->user->isGuest && !$this->_model->isVisible()) 
-					throw new CHttpException(403, Cms::t(
-								'This page is not available to the public'));
+			if(Yii::app()->user->isGuest && !$this->_model->isVisible()) 
+				throw new CHttpException(403, Cms::t(
+							'This page is not available to the public'));
 
-				else if(!Yii::app()->user->isGuest 
-						&& !$this->_model->isVisible())
-					throw new CHttpException(403, Cms::t(
-								'Only authenticated members can view this resource'));
-			}
+			else if(!Yii::app()->user->isGuest 
+					&& !$this->_model->isVisible())
+				throw new CHttpException(403, Cms::t(
+							'Only authenticated members can view this resource'));
 		}
 
 		return $this->_model;

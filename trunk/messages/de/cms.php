@@ -1,5 +1,10 @@
 <?php
 return array(
+		'Are you sure you want to delete this image?' => 'Sind Sie sicher, dass sie dieses Bild löschen wollen?',
+		'No images yet' => 'Noch keine Bilder',
+		'Upload a new Image' => 'Neues Bild hochladen',
+		'File type {mime_type} is not allowed!' => 'Dateityp {mime_type} ist nicht erlaubt!',
+		'Images' => 'Bilder',
 		'The {attribute} {id} for language {language} is already in use' => 'Feld {attribute} ({id}) ist für die Sprache {language} bereits vergeben',
 		'Redirect to self is not allowed' => 'Eine Weiterleitung auf sich selbst ist nicht möglich',
 		'Redirect' => 'Weiterleitung auf',

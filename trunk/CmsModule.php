@@ -29,6 +29,12 @@ class CmsModule extends CWebModule
 	public $allowedMetaTags = array(
 			'description', 'keywords', 'author', 'revised');
 
+	public $allowedImageMimeTypes = array(
+			'image/png',
+			'image/gif',
+			'image/jpeg');
+	public $imagePath = 'images/';
+
 	public $defaultMetaTags = array();
 
 	// If a page is requested by CMS::render and not found, should
