@@ -88,11 +88,11 @@ class SitecontentController extends Controller
 			$this->breadcrumbs = array($model->title);
 
 		if($ajax)
-			$this->renderPartial('view', array(
+			$this->renderPartial(Cms::module()->sitecontentViewFile, array(
 						'sitecontent' => $model,
 						));
 		else
-			$this->render('view', array(
+			$this->render(Cms::module()->sitecontentViewFile, array(
 						'sitecontent' => $model,
 						));
 	}
