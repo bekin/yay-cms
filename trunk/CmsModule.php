@@ -5,7 +5,7 @@ class CmsModule extends CWebModule
 {
 	public $version = '0.5-svn';
 	public $adminLayout = 'application.modules.cms.views.layouts.cms';
-	public $layout = 'cms';
+	public $layout = '//layouts/main';
 	public $dateformat = 'd.m.Y G:i:s';
 	public $enableHtmlPurifier = true;
 	public $rtepath = false; // Don't use an Rich text Editor
@@ -26,16 +26,17 @@ class CmsModule extends CWebModule
 
 	// the 'language' metatag does not need to be listed here because it is
 	// automatically inserted out of the language of the sitecontent
+	public $defaultMetaTags = array();
 	public $allowedMetaTags = array(
 			'description', 'keywords', 'author', 'revised');
 
+	// Which images are allowed and where to save them ?
 	public $allowedImageMimeTypes = array(
 			'image/png',
 			'image/gif',
 			'image/jpeg');
 	public $imagePath = 'images/';
 
-	public $defaultMetaTags = array();
 
 	// If a page is requested by CMS::render and not found, should
 	// a 404 be raised or the content simply not be delivered?
@@ -45,6 +46,8 @@ class CmsModule extends CWebModule
 	public $sitecontentCreateRoute = '//cms/sitecontent/create';
 	public $sitecontentUpdateRoute = '//cms/sitecontent/update';
 	public $sitecontentAdminRoute = '//cms/sitecontent/admin';
+
+	public $sitecontentViewFile = 'view'; 
 
 	public function init()
 	{

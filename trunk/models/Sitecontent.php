@@ -133,7 +133,6 @@ class Sitecontent extends CActiveRecord
 		}
 	}
 
-
 	public function getBreadcrumbs($route = '//cms/sitecontent/view') {
 		$breadcrumbs = array();
 	$breadcrumbs[$this->title] = $this->getAbsoluteUrl($route);
