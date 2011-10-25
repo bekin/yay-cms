@@ -248,6 +248,13 @@ if(sitecontent_title_url == '' || sitecontent_title_url == value2)
                 <?php echo $form->textArea($model,'content',array('rows'=>6, 'cols'=>50)); ?>
                 <?php echo $form->error($model,'content'); ?>
             </div>
+
+            <div class="row">
+                <?php echo $form->labelEx($model,'tags'); ?>
+                <?php echo $form->textField($model,'tags',array('size'=>60,'maxlength'=>255)); ?>
+                <?php echo $form->error($model,'tags'); ?>
+            </div>
+
     
         </fieldset>
     </div>

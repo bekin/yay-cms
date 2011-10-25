@@ -15,8 +15,10 @@ CREATE TABLE IF NOT EXISTS `sitecontent` (
   `createtime` int(11) DEFAULT NULL,
   `updatetime` int(11) DEFAULT NULL,
   `images` varchar(4096) DEFAULT NULL,
+  `tags` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`, `language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE INDEX sitecontent_title ON `sitecontent` (title);
+CREATE INDEX sitecontent_title_url ON `sitecontent` (title_url);
 
