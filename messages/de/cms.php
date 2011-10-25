@@ -1,5 +1,8 @@
 <?php
 return array(
+		'Please choose at least {min} tags' => 'Bitte wählen Sie mindestens {min} tags',
+		'Please choose every tag only once' => 'Bitte wählen Sie jedes Schlagwort nur einmal',
+		'Please do not choose more than {max} tags' => 'Bitte wählen Sie nicht mehr als {max} Schlagworte',
 		'Are you sure you want to delete this image?' => 'Sind Sie sicher, dass sie dieses Bild löschen wollen?',
 		'No images yet' => 'Noch keine Bilder',
 		'Upload a new Image' => 'Neues Bild hochladen',

@@ -160,7 +160,6 @@ if($this->visible == 4)
 	return $this->getAbsoluteUrl($route);
 	}
 
-
 public function getChildTitles() {
 	$titles = array($this->title_url);
 	if($this->childs)
@@ -178,10 +177,11 @@ public function rules()
 			array('parent, position, createtime, updatetime, visible', 'numerical', 'integerOnly'=>true),
 			array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
 			array('password, password_repeat', 'safe'),
-			array('title, redirect', 'length', 'max'=>255),
+			array('title, redirect, tags', 'length', 'max'=>255),
+			array('tags', 'TagValidator'),
 			array('images, metatags, redirect', 'safe'),
 			array('content, title_url, title_browser', 'safe'),
-			array('id, position, title, metatags, images, content, authorid, createtime, updatetime, language', 'safe', 'on'=>'search'),
+			array('id, position, title, metatags, images, content, authorid, createtime, updatetime, language, tags', 'safe', 'on'=>'search'),
 			);
 }
 
@@ -234,6 +234,7 @@ public function search()
 	$criteria->compare('createtime',$this->createtime);
 	$criteria->compare('updatetime',$this->updatetime);
 	$criteria->compare('visible',$this->visible);
+	$criteria->compare('tags',$this->tags, true);
 
 	return new CActiveDataProvider('Sitecontent', array(
 				'criteria'=>$criteria,

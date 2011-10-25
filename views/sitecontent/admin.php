@@ -51,7 +51,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'value' => '$data->itemAlias("visible", $data->visible)',
 					'filter' => Sitecontent::itemAlias('visible'),
 					),
-
+				'tags',
 				array(
 					'class'=>'CButtonColumn',
 					'viewButtonUrl' => 'Yii::app()->controller->createUrl(
