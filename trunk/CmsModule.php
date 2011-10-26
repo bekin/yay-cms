@@ -48,6 +48,7 @@ class CmsModule extends CWebModule
 	public $sitecontentAdminRoute = '//cms/sitecontent/admin';
 
 	public $sitecontentViewFile = 'view'; 
+	public $searchResultsViewFile = 'results';
 
 	public function init()
 	{
