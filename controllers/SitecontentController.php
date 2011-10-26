@@ -13,14 +13,25 @@ class SitecontentController extends Controller
 		return true;
 	}
 
-	public function actionSearch() 
+	public function actionSearch($search = null) 
 	{
-		$results = Sitecontent::model()->findAll(
-				'content like "%'.trim($_POST['search']).'%"');
+		if($search === null && isset($_POST['search']))
+			$search = $_POST['search'];
 
-		$this->render('results', array(
-					'results' => $results,
-					'search' => $_POST['search']));
+		if($search) {
+			$results = Sitecontent::model()->findAll(
+					'visible > 0 and (
+						title like :search 
+						or title_browser like :search 
+						or title_url like :search 
+						or content like :search
+						or tags like :search)', array(
+							':search' => "%$search%"));
+
+			$this->render(Cms::module()->searchResultsViewFile, array(
+						'results' => $results,
+						'search' => $search));
+		} else throw new CHttpException(404);
 	}
 
 	public static function getContent($id) {
@@ -57,7 +68,7 @@ class SitecontentController extends Controller
 	public function accessRules() {
 		return array(
 				array('allow',
-					'actions'=>array('view', 'auth'),
+					'actions'=>array('view', 'auth', 'search'),
 					'users'=>array('*'),
 					),
 				array('allow',
