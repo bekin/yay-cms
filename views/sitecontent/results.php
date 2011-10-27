@@ -10,7 +10,9 @@ if($results != array()) {
 	foreach($results as $result) {
 		printf('<li>%s</li>',
 				CHtml::link($result->title, array(
-						'//cms/sitecontent/view', 'id' => $result->id, 'highlight' => $search)));
+						Cms::module()->sitecontentViewRoute,
+						'page' => $result->title_url,
+						'highlight' => $search)));
 	}
 	echo '</ul>';	
 } else {

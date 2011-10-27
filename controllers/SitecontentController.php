@@ -72,7 +72,8 @@ class SitecontentController extends Controller
 					'users'=>array('*'),
 					),
 				array('allow',
-					'actions'=>array('update', 'create', 'admin', 'delete', 'deleteImage'),
+					'actions'=>array('update', 'create', 'admin',
+						'delete', 'moveImage', 'deleteImage'),
 					'users'=>array('admin'),
 					),
 				array('deny',  // deny all other users
@@ -94,9 +95,12 @@ class SitecontentController extends Controller
 
 		$model->registerMetaTags();
 
-
 		if(!isset($this->breadcrumbs))
 			$this->breadcrumbs = array($model->title);
+
+		// update view counter
+		$model->views++;
+		$model->save(false, array('views'));
 
 		if($ajax)
 			$this->renderPartial(Cms::module()->sitecontentViewFile, array(
@@ -106,6 +110,44 @@ class SitecontentController extends Controller
 			$this->render(Cms::module()->sitecontentViewFile, array(
 						'sitecontent' => $model,
 						));
+	}
+
+
+	public function actionMoveImage($id, $language, $image, $direction) {
+		$sitecontent = $this->loadContent();
+		if($sitecontent) {
+			$images = $sitecontent->images;
+
+			foreach($images as $key => $value) {
+				if($image == $value) {
+					// Image already at top ?
+					if($direction == 'up' && $key == 0)
+						break;
+					// Image already at bottom ?
+					if($direction == 'down' && $key == count($images) - 1)
+						break;
+
+					// swap	
+					if($direction == 'up') {
+						$tmp = $images[$key - 1];
+						$images[$key - 1] = $image;
+						$images[$key] = $tmp;
+					}else if($direction == 'down') {
+						$tmp = $images[$key + 1];
+						$images[$key + 1] = $image;
+						$images[$key] = $tmp;
+					}
+				}
+			}
+			$sitecontent->images = $images;
+
+			$sitecontent->save(false, array('images'));
+
+			$this->redirect( array(
+						Cms::module()->sitecontentUpdateRoute,
+						'page' => $sitecontent->title_url));
+		}
+		throw new CHttpException(404);
 	}
 
 	public function checkPassword (&$model, $password, $password_repeat) {
@@ -134,9 +176,11 @@ class SitecontentController extends Controller
 		{
 			$model->attributes = $_POST['Sitecontent'];
 
-			$this->checkPassword($model,
-					$_POST['Sitecontent']['password'],
-					$_POST['Sitecontent']['password_repeat']);
+			if(isset($_POST['Sitecontent']['password'])
+					&& isset($_POST['Sitecontent']['password_repeat']))
+				$this->checkPassword($model,
+						$_POST['Sitecontent']['password'],
+						$_POST['Sitecontent']['password_repeat']);
 
 			$model->processImages($_FILES);
 
@@ -173,9 +217,11 @@ class SitecontentController extends Controller
 		if(isset($_POST['Sitecontent']))
 		{
 			$model->attributes=$_POST['Sitecontent'];
-			$this->checkPassword($model,
-					$_POST['Sitecontent']['password'],
-					$_POST['Sitecontent']['password_repeat']);
+			if(isset($_POST['Sitecontent']['password'])
+					&& isset($_POST['Sitecontent']['password_repeat']))
+				$this->checkPassword($model,
+						$_POST['Sitecontent']['password'],
+						$_POST['Sitecontent']['password_repeat']);
 
 			$model->processImages($_FILES);
 
@@ -252,7 +298,8 @@ class SitecontentController extends Controller
 		if($this->_model===null)
 		{
 			if(isset($_GET['id']) && is_array(@$_GET['id']))
-				$this->_model = Sitecontent::model()->find('id = :id and language = :language',  array(
+				$this->_model = Sitecontent::model()->find(
+						'id = :id and language = :language',  array(
 							':id' => $_GET['id']['id'],
 							':language' => $_GET['id']['language'],
 							));
