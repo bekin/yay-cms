@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `sitecontent` (
   `updatetime` int(11) DEFAULT NULL,
   `images` varchar(4096) DEFAULT NULL,
   `tags` varchar(255) DEFAULT NULL,
+  `views` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`, `language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

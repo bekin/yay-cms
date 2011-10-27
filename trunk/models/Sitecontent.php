@@ -113,6 +113,15 @@ class Sitecontent extends CActiveRecord
 			return 1;
 	}
 
+	public function getImage($image = 0, $htmlOptions = array()) {
+		if(isset($this->images[$image]))
+			return CHtml::image(sprintf('%s/%s%s',
+						Yii::app()->baseUrl ,
+						Cms::module()->imagePath ,
+						$this->images[$image]),
+					$this->title, $htmlOptions);			
+	}
+
 	public function processImages ($images) {
 		if(isset($images['image_new']) && $images['image_new']['name'] != '') {
 			$image = $images['image_new'];

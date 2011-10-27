@@ -58,8 +58,20 @@
 										if($images && !$model->isNewRecord) {
 											echo '<table>';
 											foreach($images as $i => $image) {
-												printf( '<tr><td>%s</td><td>%s</td><td>%s</td>',
+												printf( '<tr><td>%s</td><td>%s</td><td>%s %s %s</td>',
 														$image, Cms::getImage($image, $image, true), 
+														count($images) > 1 ? CHtml::link('Up', array(
+																'//cms/sitecontent/moveImage',
+																'id' => $model->id,
+																'language' => $model->language,
+																'image' => $image,
+																'direction' => 'up')) : '',
+														count($images) > 1 ? CHtml::link('Down', array(
+																'//cms/sitecontent/moveImage',
+																'id' => $model->id,
+																'language' => $model->language,
+																'image' => $image,
+																'direction' => 'down')) : '',
 														CHtml::link(
 															CHtml::image(
 																Yii::app()->getAssetManager()->publish(
