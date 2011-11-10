@@ -6,6 +6,7 @@ class TagCloudWidget extends CWidget
 	public function init() {
 		parent::init();
 	}
+
 	public function run() {
 
 		if($this->beginCache('yay_cms_tag_cloud', array(
@@ -24,9 +25,9 @@ class TagCloudWidget extends CWidget
 					foreach($words as $word) {
 						$word = CHtml::encode($word);
 						if(isset($tags[$word]))
-						$tags[$word]++;
+						$tags[trim($word)]++;
 					else
-						$tags[$word] = 1;
+						$tags[trim($word)] = 1;
 				}
 			}
 
