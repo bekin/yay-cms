@@ -181,7 +181,7 @@ public function getChildTitles() {
 public function rules()
 {
 	return array(
-			array('id, position, title, language', 'required'),
+			array('id, title, language', 'required'),
 			array('id, title_url', 'CmsUniqueValidator'),
 			array('parent, position, createtime, updatetime, visible', 'numerical', 'integerOnly'=>true),
 			array('password, password_repeat', 'length', 'max' => 255, 'on' => 'restricted'),
