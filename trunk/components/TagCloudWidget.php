@@ -2,6 +2,7 @@
 class TagCloudWidget extends CWidget
 {
 	public $cacheDuration = 3600;
+	public $linkUrl = '//cms/sitecontent/search';
 
 	public function init() {
 		parent::init();
@@ -31,7 +32,10 @@ class TagCloudWidget extends CWidget
 				}
 			}
 
-			$this->render('tagcloud', array('tags' => $tags));
+			$this->render('tagcloud', array(
+						'tags' => $tags,
+						'linkUrl' => $this->linkUrl,
+						));
 			$this->endCache();
 		}
 	}

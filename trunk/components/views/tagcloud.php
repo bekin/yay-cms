@@ -21,7 +21,7 @@ function getWeight($weight) {
 		if($tag)
 			printf('%s, ',
 					CHtml::link($tag, array(
-					'//cms/sitecontent/search', 'search' => $tag), array(
+					$linkUrl, 'search' => $tag), array(
 				'class' => 'weight-'.getWeight($weight),
 			))); ?>
 				<?php } ?>
