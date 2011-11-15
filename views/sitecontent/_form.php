@@ -120,9 +120,7 @@ else echo Cms::t('No images yet');
                 <?php echo $form->labelEx($model,'parent'); ?>
                 <?php echo CHtml::activeDropDownList($model,
                         'parent',
-                        CHtml::listData(Sitecontent::model()->findAll(),
-                            'id',
-                            'title'),
+												Sitecontent::listData(),
                         array(
                             'empty' => array(
                                 '0' => ' - ')));

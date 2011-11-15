@@ -25,33 +25,59 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'dataProvider'=>$model->search(),
 			'filter'=>$model,
 			'columns'=>array(
-				'id',
+				array(
+					'name' => 'id',
+					'headerHtmlOptions' => array(
+						'style' => 'width:25px;',
+						),
+					),
 				array(
 					'name' => 'parent',
 					'value' => '$data->Parent ? $data->Parent->title_url : "-"',
-					'filter' => CHtml::listData(Sitecontent::model()->findAll(), 'id', 'title_url'),
+					'filter' => Sitecontent::listData(),
+					'headerHtmlOptions' => array(
+						'style' => 'width:100px;',
+						),
 					),
 				array(
 					'name' => 'language',
 					'filter' => Cms::module()->languages,
+					'headerHtmlOptions' => array(
+						'style' => 'width:25px;',
+						),
 					),
 				'title',
 				array(
 					'name'=>'createtime',
 					'value'=>'date(Cms::module()->dateformat, $data->createtime)',
 					'filter' => false,
+					'headerHtmlOptions' => array(
+						'style' => 'width:85px;',
+						),
 				),
 				array(
 					'name'=>'updatetime',
 					'value'=>'date(Cms::module()->dateformat, $data->updatetime)',
 					'filter' => false,
+					'headerHtmlOptions' => array(
+						'style' => 'width:85px;',
+						),
 				),
 				array(
 					'name' => 'visible',
 					'value' => '$data->itemAlias("visible", $data->visible)',
 					'filter' => Sitecontent::itemAlias('visible'),
+					'headerHtmlOptions' => array(
+						'style' => 'width:50px;',
+						),
+
 					),
-				'tags',
+			array(
+					'name' => 'tags',
+					'headerHtmlOptions' => array(
+						'style' => 'width:100px;',
+						),
+					),
 				array(
 					'class'=>'CButtonColumn',
 					'viewButtonUrl' => 'Yii::app()->controller->createUrl(

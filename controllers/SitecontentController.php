@@ -112,7 +112,6 @@ class SitecontentController extends Controller
 						));
 	}
 
-
 	public function actionMoveImage($id, $language, $image, $direction) {
 		$sitecontent = $this->loadContent();
 		if($sitecontent) {
