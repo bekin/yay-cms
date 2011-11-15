@@ -122,6 +122,21 @@ class Sitecontent extends CActiveRecord
 					$this->title, $htmlOptions);			
 	}
 
+	public function listData() {
+		$listData=array();
+		foreach(	Sitecontent::model()->findAll() as $model)
+		{
+			if(isset($model->Parent))
+				$group=$model->Parent->title;
+			else
+				$group=$model->title;
+			$value=CHtml::value($model,'id');
+			$text=CHtml::value($model,'title');
+			$listData[$group][$value]=$text;
+		}
+		return $listData;
+	}
+
 	public function processImages ($images) {
 		if(isset($images['image_new']) && $images['image_new']['name'] != '') {
 			$image = $images['image_new'];
