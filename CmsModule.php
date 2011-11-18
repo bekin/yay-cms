@@ -46,6 +46,7 @@ class CmsModule extends CWebModule
 	public $sitecontentCreateRoute = '//cms/sitecontent/create';
 	public $sitecontentUpdateRoute = '//cms/sitecontent/update';
 	public $sitecontentAdminRoute = '//cms/sitecontent/admin';
+	public $imageAdminRoute = '//cms/sitecontent/adminImages';
 
 	public $sitecontentViewFile = 'view'; 
 	public $searchResultsViewFile = 'results';

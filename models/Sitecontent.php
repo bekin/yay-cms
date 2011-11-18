@@ -123,16 +123,15 @@ class Sitecontent extends CActiveRecord
 	}
 
 	public function listData() {
-		$listData=array();
-		foreach(	Sitecontent::model()->findAll() as $model)
-		{
+		$listData = array();
+		foreach(Sitecontent::model()->findAll() as $model) {
 			if(isset($model->Parent))
-				$group=$model->Parent->title;
+				$group = $model->Parent->title;
 			else
-				$group=$model->title;
-			$value=CHtml::value($model,'id');
-			$text=CHtml::value($model,'title');
-			$listData[$group][$value]=$text;
+				$group = $model->title;
+			$value = CHtml::value($model,'id');
+			$text = CHtml::value($model,'title');
+			$listData[$group][$value] = $text;
 		}
 		return $listData;
 	}
@@ -263,7 +262,7 @@ public function search()
 	return new CActiveDataProvider('Sitecontent', array(
 				'criteria'=>$criteria,
 				'pagination' => array(
-					'pageSize' => 25 
+					'pageSize' => 50 
 					)
 				));
 }

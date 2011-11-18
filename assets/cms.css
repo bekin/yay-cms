@@ -75,7 +75,7 @@ table, td, th 				{vertical-align:middle;}
 
 #cms legend { font-size:1.5em; font-weight:bold;}
 
-#cms label { display: inline-block !important; font-weight:bold; font-size:12px;}
+#cms label { display: inline-block !important; font-weight:bold; font-size:12px; vertical-align: top;}
 #cms .row label { display:block; font-weight:bold; font-size:12px;}
 
 #cms input[type=text],

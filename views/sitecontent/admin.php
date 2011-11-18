@@ -23,6 +23,7 @@ $this->menu=array(
 $this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'sitecontent-grid',
 			'dataProvider'=>$model->search(),
+			'template' => '{summary} {pager} <br /> {items} {pager}',
 			'filter'=>$model,
 			'columns'=>array(
 				array(
