@@ -72,8 +72,8 @@ class SitecontentController extends Controller
 					'users'=>array('*'),
 					),
 				array('allow',
-					'actions'=>array('update', 'create', 'admin',
-						'delete', 'moveImage', 'deleteImage'),
+					'actions'=>array('update', 'create', 'admin', 'adminImages',
+						'delete', 'moveImage', 'deleteImage', 'unlinkImage'),
 					'users'=>array('admin'),
 					),
 				array('deny',  // deny all other users
@@ -237,11 +237,16 @@ class SitecontentController extends Controller
 					));
 	}
 
+	public function actionUnlinkImage($filename) {
+		unlink(Yii::app()->basePath.'/../'.Cms::module()->imagePath.$filename);
+		$this->redirect(array(Cms::module()->imageAdminRoute));
+	}
+
 	public function actionDeleteImage($model_id, $language, $image) {
 		$model = Sitecontent::model()->find(
 				'id = :model_id and language = :language', array(
-			':model_id' => $model_id,
-			':language' => $language));
+					':model_id' => $model_id,
+					':language' => $language));
 
 		if($model && $image) {
 			$images = $model->images;
@@ -254,13 +259,13 @@ class SitecontentController extends Controller
 				Cms::setFlash('Image has been removed');
 			else
 				Cms::setFlash('Error while removing image');
-		
+
 			$this->redirect(array(
-						'//cms/sitecontent/update',
+						Cms::module()->sitecontentUpdateRoute,
 						'id' => $model_id,
 						'language' => $language));
 
-}	
+		}	
 
 	}
 
@@ -291,6 +296,33 @@ class SitecontentController extends Controller
 					'model'=>$model,
 					));
 	}
+
+	public function actionAdminImages()
+	{
+		$this->layout = Cms::module()->adminLayout;
+
+		if(isset($_FILES['image_0'])) {
+			foreach($_FILES as $key => $image) {
+				if($image['name']) {
+					move_uploaded_file($image['tmp_name'],
+							Cms::module()->imagePath . $image['name']);
+				}
+			}
+
+			$this->redirect(array(Cms::module()->sitecontentAdminRoute));
+		}
+
+		$handle = opendir(Yii::app()->basePath . '/../' . Cms::module()->imagePath);
+
+		while($image = readdir($handle))
+			if($image != '.' && $image != '..') 
+				$images[] = $image;
+
+		$this->render('admin_images',array(
+					'images'=>$images,
+					));
+	}
+
 
 	public function loadContent()
 	{
