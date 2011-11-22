@@ -323,7 +323,6 @@ class SitecontentController extends Controller
 					));
 	}
 
-
 	public function loadContent()
 	{
 		if($this->_model===null)

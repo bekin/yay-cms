@@ -15,7 +15,6 @@ function getWeight($weight) {
 ?>
 <div class="tag-cloud">
 <?php if($tags) { ?>
-<ul>
 <?php foreach($tags as $tag => $weight) { ?>
 	<?php
 		if($tag)
@@ -25,7 +24,6 @@ function getWeight($weight) {
 				'class' => 'weight-'.getWeight($weight),
 			))); ?>
 				<?php } ?>
-</ul>
 <?php } ?>
 </div> 
 <div style="clear: both;"></div>

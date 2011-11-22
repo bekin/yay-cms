@@ -34,6 +34,7 @@ class CmsModule extends CWebModule
 	public $allowedImageMimeTypes = array(
 			'image/png',
 			'image/gif',
+			'image/jpg',
 			'image/jpeg');
 	public $imagePath = 'images/';
 

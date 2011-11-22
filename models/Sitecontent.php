@@ -11,7 +11,7 @@ class Sitecontent extends CActiveRecord
 	}
 
 	public function isVisible() {
-		if(Yii::app()->user->id == 1)
+		if(Yii::app()->user->id == 1 || Yii::app()->user->name == 'admin')
 			return true;
 		if($this->visible == 3 || $this->visible == 4)
 			return true;
@@ -122,16 +122,26 @@ class Sitecontent extends CActiveRecord
 					$this->title, $htmlOptions);			
 	}
 
+	public function order($order)
+	{
+		$this->getDbCriteria()->mergeWith(array(
+					'order'=>$order
+					));
+		return $this;
+	}
+
 	public function listData() {
 		$listData = array();
-		foreach(Sitecontent::model()->findAll() as $model) {
-			if(isset($model->Parent))
-				$group = $model->Parent->title;
-			else
-				$group = $model->title;
-			$value = CHtml::value($model,'id');
-			$text = CHtml::value($model,'title');
-			$listData[$group][$value] = $text;
+
+		$root = Sitecontent::model()->findAll('parent is NULL or parent = 0');
+		foreach($root as $model) {
+			$listData[$model->id] = $model->title;
+			if($model->childs)
+				foreach($model->childs as $child) {
+					$listData[$child->id] = ' - '.$child->title;
+					foreach($child->childs as $subchild)
+						$listData[$subchild->id] = ' -- '.$subchild->title;
+				}
 		}
 		return $listData;
 	}
@@ -266,4 +276,4 @@ public function search()
 					)
 				));
 }
-}
+}	
