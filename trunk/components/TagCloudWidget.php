@@ -2,6 +2,7 @@
 class TagCloudWidget extends CWidget
 {
 	public $cacheDuration = 3600;
+	public $limit = 10;
 	public $linkUrl = '//cms/sitecontent/search';
 
 	public function init() {
@@ -16,20 +17,28 @@ class TagCloudWidget extends CWidget
 			$result = Yii::app()->db->createCommand()
 				->select('tags')
 				->from('sitecontent')
-				->where('visible > 0')
+				->where('visible = 3')
 				->order('tags')
 				->queryAll();
 
 			foreach($result as $record) {
 				$words = explode(',', strip_tags($record['tags']));	
-				if($words)
+				if($words) {
 					foreach($words as $word) {
-						$word = CHtml::encode($word);
-						if(isset($tags[$word]))
-						$tags[trim($word)]++;
-					else
-						$tags[trim($word)] = 1;
+							$word = CHtml::encode($word);
+							if(isset($tags[$word]))
+								$tags[trim($word)]++;
+							else
+								$tags[trim($word)] = 1;
+					}
 				}
+			}
+
+			$i = 0;
+			foreach($tags as $key => $tag) {
+				if($i > $this->limit)
+					unset($tags[$key]);
+				$i++;
 			}
 
 			$this->render('tagcloud', array(

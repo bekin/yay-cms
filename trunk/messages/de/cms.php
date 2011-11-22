@@ -1,5 +1,12 @@
 <?php
 return array(
+		'Remove image' => 'Bild löschen',
+		'Are you sure to remove this image permanently?' => 'Sind Sie sicher, dass Sie dieses Bild dauerhaft löschen wollen?',
+		'Filename' => 'Dateiname',
+		'Image' => 'Bild',
+		'Options' => 'Optionen',
+		'Upload images' => 'Bilder hochladen',
+		'Manage Images' => 'Bilderverwaltung',
 		'Please choose at least {min} tags' => 'Bitte wählen Sie mindestens {min} tags',
 		'Please choose every tag only once' => 'Bitte wählen Sie jedes Schlagwort nur einmal',
 		'Please do not choose more than {max} tags' => 'Bitte wählen Sie nicht mehr als {max} Schlagworte',
@@ -71,10 +78,5 @@ return array(
 		'Save' => 'Speichern',
 		'Update' => 'Bearbeite',
 		'Site options' => 'Seitenoptionen',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
 		);
 ?>
