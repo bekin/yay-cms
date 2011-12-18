@@ -50,6 +50,7 @@ class CmsModule extends CWebModule
 	public $imageAdminRoute = '//cms/sitecontent/adminImages';
 
 	public $sitecontentViewFile = 'view'; 
+	public $sitecontentUpdateFile = 'update'; 
 	public $searchResultsViewFile = 'results';
 
 	public function init()
