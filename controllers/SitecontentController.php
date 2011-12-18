@@ -232,7 +232,7 @@ class SitecontentController extends Controller
 			}
 		}
 
-		$this->render('update',array(
+		$this->render(Cms::module()->sitecontentUpdateFile,array(
 					'model'=>$model,
 					));
 	}
