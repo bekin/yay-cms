@@ -49,12 +49,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					),
 				'title',
 				'title_url',
+				'position',
 				array(
 					'name'=>'createtime',
 					'value'=>'date(Cms::module()->dateformat, $data->createtime)',
 					'filter' => false,
 					'headerHtmlOptions' => array(
-						'style' => 'width:85px;',
+						'style' => 'width:110px;',
 						),
 				),
 				array(
@@ -62,7 +63,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'value'=>'date(Cms::module()->dateformat, $data->updatetime)',
 					'filter' => false,
 					'headerHtmlOptions' => array(
-						'style' => 'width:85px;',
+						'style' => 'width:110px;',
 						),
 				),
 				array(
