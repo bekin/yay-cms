@@ -2,6 +2,7 @@
 
 class Sitecontent extends CActiveRecord
 {
+	public $language;
 	public $password;
 	public $password_repeat;
 
@@ -139,8 +140,13 @@ class Sitecontent extends CActiveRecord
 			if($model->childs)
 				foreach($model->childs as $child) {
 					$listData[$child->id] = ' - '.$child->title;
-					foreach($child->childs as $subchild)
-						$listData[$subchild->id] = ' -- '.$subchild->title;
+					if($child->childs)
+						foreach($child->childs as $subchild) {
+							$listData[$subchild->id] = ' -- '.$subchild->title;
+							if($subchild->childs)
+								foreach($subchild->childs as $subsubchild)
+									$listData[$subsubchild->id] = ' --- '.$subsubchild->title;
+						}
 				}
 		}
 		return $listData;
@@ -223,7 +229,7 @@ public function relations()
 	return array(
 			// Parent is uppercase to differentiate it from the column
 			'Parent' => array(self::BELONGS_TO, 'Sitecontent', 'parent'),
-			'childs' => array(self::HAS_MANY, 'Sitecontent', 'parent'),
+			'childs' => array(self::HAS_MANY, 'Sitecontent', 'parent', 'order' => 'position', 'condition' => 'language = \''.Yii::app()->language. '\''),
 			);
 }
 
