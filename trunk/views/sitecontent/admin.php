@@ -48,6 +48,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						),
 					),
 				'title',
+				'title_url',
 				array(
 					'name'=>'createtime',
 					'value'=>'date(Cms::module()->dateformat, $data->createtime)',
