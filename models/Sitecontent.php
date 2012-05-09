@@ -260,6 +260,7 @@ public function search()
 	$criteria->compare('position',$this->position);
 	$criteria->compare('language',$this->language);
 	$criteria->compare('title',$this->title,true);
+	$criteria->compare('title_url',$this->title_url,true);
 	$criteria->compare('metatags',$this->metatags,true);
 	$criteria->compare('images',$this->images,true);
 	$criteria->compare('content',$this->content,true);
