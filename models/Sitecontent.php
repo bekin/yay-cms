@@ -257,6 +257,24 @@ public function attributeLabels()
 			);
 }
 
+public function limit($limit=10)
+{
+	$this->getDbCriteria()->mergeWith(array(
+				'limit'=>$limit,
+				));
+	return $this;
+}
+
+public function group($group='id')
+{
+	$this->getDbCriteria()->mergeWith(array(
+				'group'=>$group,
+				));
+	return $this;
+}
+
+
+
 public function search()
 {
 	$criteria=new CDbCriteria;
