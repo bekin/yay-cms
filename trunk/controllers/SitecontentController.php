@@ -72,8 +72,8 @@ class SitecontentController extends Controller
 					'users'=>array('*'),
 					),
 				array('allow',
-					'actions'=>array('update', 'create', 'admin', 'adminImages',
-						'delete', 'moveImage', 'deleteImage', 'unlinkImage'),
+					'actions'=>array('updateValue', 'update', 'create', 'admin',
+						'adminImages', 'delete', 'moveImage', 'deleteImage', 'unlinkImage'),
 					'users'=>array('admin'),
 					),
 				array('deny',  // deny all other users
@@ -81,6 +81,29 @@ class SitecontentController extends Controller
 					),
 				);
 
+	}
+
+	public function actionUpdateValue() {
+		if(Yii::app()->user->isGuest)
+			throw new CHttpException(403);
+
+		if(!Yii::app()->request->isAjaxRequest)
+			throw new CHttpException(403, Cms::t('This is not an ajax request'));
+
+		$model = Sitecontent::model()->find(
+				'id = :id and language = :language', array(
+					'id' => $_POST['id'],
+					'language' => $_POST['language'],
+					));
+		if(!$model)
+			throw new CHttpException(404);
+
+		$column = $_POST['column'];
+
+		if(isset($model->$column))
+			$model->$column = $_POST['value'];
+
+		return $model->save();
 	}
 
 	public function actionView($ajax = false)
