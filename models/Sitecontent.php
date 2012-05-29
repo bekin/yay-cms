@@ -294,6 +294,8 @@ public function search()
 	$criteria->compare('visible',$this->visible);
 	$criteria->compare('tags',$this->tags, true);
 
+	$criteria->with = array('Parent');
+
 	return new CActiveDataProvider('Sitecontent', array(
 				'criteria'=>$criteria,
 				'pagination' => array(

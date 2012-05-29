@@ -20,7 +20,6 @@ class CmsModule extends CWebModule
 
 	public $rtescript = false;
 
-
 	// Which languages do your cms serve?
 	public $languages = array('en' => 'English');
 
@@ -38,7 +37,6 @@ class CmsModule extends CWebModule
 			'image/jpeg');
 	public $imagePath = 'images/';
 
-
 	// If a page is requested by CMS::render and not found, should
 	// a 404 be raised or the content simply not be delivered?
 	public $strict404raising = false;
@@ -52,6 +50,9 @@ class CmsModule extends CWebModule
 	public $sitecontentViewFile = 'view'; 
 	public $sitecontentUpdateFile = 'update'; 
 	public $searchResultsViewFile = 'results';
+
+	public $enableLiveEdit = true;
+	public $enableTooltip = true;
 
 	public function init()
 	{

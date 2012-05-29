@@ -20,7 +20,7 @@ $this->menu=array(
 <h2><?php echo Cms::t('Manage Sitecontent'); ?></h2>
 
 <?php 
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('application.modules.cms.components.CEditableGridView', array(
 			'id'=>'sitecontent-grid',
 			'dataProvider'=>$model->search(),
 			'template' => '{summary} {pager} <br /> {items} {pager}',
@@ -31,7 +31,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'headerHtmlOptions' => array(
 						'style' => 'width:25px;',
 						),
-					),
+						'htmlOptions' => array(
+							'class' => 'editable',
+							'rel' => 'id')),
 				array(
 					'name' => 'parent',
 					'value' => '$data->Parent ? $data->Parent->title_url : "-"',
@@ -46,10 +48,25 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'headerHtmlOptions' => array(
 						'style' => 'width:25px;',
 						),
-					),
-				'title',
-				'title_url',
-				'position',
+						'htmlOptions' => array(
+							'class' => 'editable',
+							'rel' => 'language')),
+				array('name' => 'title',
+						'htmlOptions' => array(
+							'class' => 'editable',
+							'rel' => 'title')),
+				array(
+						'name' => 'title_url',
+						'type' => 'raw',
+						'value' => '\'<p class="tooltip">\'.$data->title_url.\'</p><p class="tooltip-content">\'.CHtml::encode(substr($data->content, 0, 500)).\'</p>\'',
+						),
+
+				array(
+						'name' => 'position',
+						'headerHtmlOptions' => array(
+							'style' => 'width:5px;',
+							),
+						),
 				array(
 					'name'=>'createtime',
 					'value'=>'date(Cms::module()->dateformat, $data->createtime)',
@@ -92,3 +109,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			<?php echo CHtml::link(
 					Cms::t('Create new Sitecontent'), array(
 						'//cms/sitecontent/create'), array('tabindex' => 1)); ?>
+
+<?php
+	if(Cms::module()->enableTooltip) {
+		Yii::app()->clientScript->registerScriptFile(
+				Yii::app()->getAssetManager()->publish(
+					Yii::getPathOfAlias(
+						'application.modules.cms.assets').'/jquery.tooltip.js'));
+
+		Yii::app()->clientScript->registerScript(
+				'tooltip', "$('.tooltip').tooltip({
+			position: 'center left',
+			offset: [10, 2]});");
+	}
+?>
