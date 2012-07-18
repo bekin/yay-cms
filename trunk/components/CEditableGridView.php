@@ -1,4 +1,4 @@
-<?php
+<?
 
 /**
  * CEditableGridView represents a grid view which contains editable rows

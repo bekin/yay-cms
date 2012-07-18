@@ -1,4 +1,4 @@
-<?php
+<?
 return array(
 		'Remove image' => 'Bild löschen',
 		'Are you sure to remove this image permanently?' => 'Sind Sie sicher, dass Sie dieses Bild dauerhaft löschen wollen?',

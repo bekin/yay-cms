@@ -1,4 +1,4 @@
-<?php
+<?
 $url = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('CmsAssets'));         
 $file = $url . DIRECTORY_SEPARATOR . 'jquery.jshowoff.min.js';
 Yii::app()->clientScript->registerScriptFile($file);

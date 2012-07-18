@@ -1,1 +1,1 @@
-<?php echo $sitecontent->content; ?>
+<? echo $sitecontent->content; ?>

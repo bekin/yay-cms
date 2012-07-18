@@ -1,4 +1,4 @@
-<?php
+<?
 function getWeight($weight) {
 	if($weight > 100)
 		return 1;
@@ -14,16 +14,16 @@ function getWeight($weight) {
 }
 ?>
 <div class="tag-cloud">
-<?php if($tags) { ?>
-<?php foreach($tags as $tag => $weight) { ?>
-	<?php
+<? if($tags) { ?>
+<? foreach($tags as $tag => $weight) { ?>
+	<?
 		if($tag)
 			printf('%s, ',
 					CHtml::link($tag, array(
 					$linkUrl, 'search' => $tag), array(
 				'class' => 'weight-'.getWeight($weight),
 			))); ?>
-				<?php } ?>
-<?php } ?>
+				<? } ?>
+<? } ?>
 </div> 
 <div style="clear: both;"></div>

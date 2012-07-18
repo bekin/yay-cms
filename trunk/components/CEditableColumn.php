@@ -1,4 +1,4 @@
-<?php
+<?
 /**
  * CEditableColumn class file.
  *

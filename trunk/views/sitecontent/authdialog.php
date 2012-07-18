@@ -1,4 +1,4 @@
-<?php
+<?
 
 
 $dialogOptions = array_merge($dialogOptions, array(

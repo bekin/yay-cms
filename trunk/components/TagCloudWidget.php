@@ -1,4 +1,4 @@
-<?php
+<?
 class TagCloudWidget extends CWidget
 {
 	public $cacheDuration = 3600;

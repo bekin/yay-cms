@@ -1,4 +1,4 @@
-<?php
+<?
 $this->breadcrumbs=array(
 	Yii::t('CmsModule.cms', 'Sitecontent')=>array('admin'),
 	$model->id=>array('view','id'=>$model->id),
@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h2><?php echo Cms::t('Update');?> <?php echo $model->title; ?></h2>
+<h2><? echo Cms::t('Update');?> <? echo $model->title; ?></h2>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<? echo $this->renderPartial('_form', array('model'=>$model)); ?>

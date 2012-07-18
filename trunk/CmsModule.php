@@ -1,9 +1,9 @@
-<?php
+<?
 Yii::setPathOfAlias('CmsAssets' , dirname(__FILE__) . '/assets/');   
 
 class CmsModule extends CWebModule
 {
-	public $version = '0.5-svn';
+	public $version = '0.5';
 	public $adminLayout = 'application.modules.cms.views.layouts.cms';
 	public $layout = '//layouts/main';
 	public $dateformat = 'd.m.Y G:i:s';

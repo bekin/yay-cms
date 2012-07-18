@@ -1,4 +1,4 @@
-<?php
+<?
 /**
  * Checks if a id is unique for the specified language
  **/
