@@ -1,4 +1,4 @@
-<?php                                                                           
+<?                                                                           
 if(isset($sc))
  $this->pageTitle = $sc->title_browser; 
 if(isset($menu))

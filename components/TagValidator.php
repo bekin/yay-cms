@@ -1,4 +1,4 @@
-<?php
+<?
 /**
  * Checks if given tags have the correct format
  **/

@@ -1,4 +1,4 @@
-<?php
+<?
 class SearchWidget extends CWidget
 {
 	public function init()

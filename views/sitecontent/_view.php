@@ -1,32 +1,32 @@
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+	<b><? echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
+	<? echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('position')); ?>:</b>
-	<?php echo CHtml::encode($data->position); ?>
+	<b><? echo CHtml::encode($data->getAttributeLabel('position')); ?>:</b>
+	<? echo CHtml::encode($data->position); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
-	<?php echo CHtml::encode($data->title); ?>
+	<b><? echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
+	<? echo CHtml::encode($data->title); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('content')); ?>:</b>
-	<?php echo CHtml::encode($data->content); ?>
+	<b><? echo CHtml::encode($data->getAttributeLabel('content')); ?>:</b>
+	<? echo CHtml::encode($data->content); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('authorid')); ?>:</b>
-	<?php echo CHtml::encode($data->authorid); ?>
+	<b><? echo CHtml::encode($data->getAttributeLabel('authorid')); ?>:</b>
+	<? echo CHtml::encode($data->authorid); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('createtime')); ?>:</b>
-	<?php echo CHtml::encode($data->createtime); ?>
+	<b><? echo CHtml::encode($data->getAttributeLabel('createtime')); ?>:</b>
+	<? echo CHtml::encode($data->createtime); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('updatetime')); ?>:</b>
-	<?php echo CHtml::encode($data->updatetime); ?>
+	<? /*
+	<b><? echo CHtml::encode($data->getAttributeLabel('updatetime')); ?>:</b>
+	<? echo CHtml::encode($data->updatetime); ?>
 	<br />
 
 	*/ ?>

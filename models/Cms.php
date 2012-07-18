@@ -1,4 +1,4 @@
-<?php
+<?
 
 Yii::import('application.modules.cms.models.*');
 Yii::import('application.modules.cms.controllers.*');

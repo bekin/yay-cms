@@ -1,4 +1,4 @@
-<?php
+<?
 
 Yii::import('application.modules.cms.models.Sitecontent');
 class SitecontentController extends Controller

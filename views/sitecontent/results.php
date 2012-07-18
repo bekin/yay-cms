@@ -1,4 +1,4 @@
-<?php
+<?
 $this->breadcrumbs = array(Yii::t('CmsModule.cms', 'Search results'));
 
 if($results != array()) {

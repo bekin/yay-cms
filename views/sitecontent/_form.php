@@ -1,4 +1,4 @@
-<?php
+<?
 	if(Cms::module()->rtepath != false)
 		Yii::app()->clientScript-> registerScriptFile(Yii::app()->getModule('cms')->rtepath, CClientScript::POS_HEAD); 
 	if(Cms::module()->rteadapter != false)
@@ -7,7 +7,7 @@
 		Yii::app()->clientScript->registerScript('rte_init', Cms::module()->rtescript);
 ?>
 <div class="form">
-	<?php $form=$this->beginWidget('CActiveForm', array(
+	<? $form=$this->beginWidget('CActiveForm', array(
 				'id'=>'sitecontent-form',
 				'enableAjaxValidation'=>true,
 				'enableClientValidation'=>true,
@@ -18,12 +18,12 @@
 				));
 	?>
 
-	<?php echo $form->errorSummary($model); ?>
+	<? echo $form->errorSummary($model); ?>
 
 	<div class="box-form-right">
         <fieldset>
-            <legend><?php echo Cms::t('Metatags'); ?></legend>
-            <?php
+            <legend><? echo Cms::t('Metatags'); ?></legend>
+            <?
                 $metatags = $model->metatags;
                 
                 if(!$metatags)
@@ -48,8 +48,8 @@
         </fieldset>
 
       <fieldset>
-            <legend><?php echo Cms::t('Images'); ?></legend>
-            <?php
+            <legend><? echo Cms::t('Images'); ?></legend>
+            <?
                 $images = $model->images;
                 
                 if(!$images)
@@ -58,8 +58,10 @@
 										if($images && !$model->isNewRecord) {
 											echo '<table>';
 											foreach($images as $i => $image) {
-												printf( '<tr><td>%s</td><td>%s</td><td>%s %s %s</td>',
-														$image, Cms::getImage($image, $image, true), 
+												printf(
+														'<tr><td>%s</td><td>%s</td><td>%s %s %s</td>',
+														Yii::app()->baseUrl . '/' . Cms::module()->imagePath. $image,
+														Cms::getImage($image, $image, true), 
 														count($images) > 1 ? CHtml::link('Up', array(
 																'//cms/sitecontent/moveImage',
 																'id' => $model->id,
@@ -107,71 +109,71 @@ else echo Cms::t('No images yet');
 
 	<div class="box-form-left">
         <fieldset>
-            <legend ><?php echo Cms::t('Site options'); ?></legend>
+            <legend ><? echo Cms::t('Site options'); ?></legend>
             
             <div class="row">
-                <?php echo $form->labelEx($model,'id'); ?>
-                <?php echo $form->textField($model,'id',array('size'=>5,'maxlength'=>11)); ?>
-                <?php echo $form->error($model,'id'); ?>
+                <? echo $form->labelEx($model,'id'); ?>
+                <? echo $form->textField($model,'id',array('size'=>5,'maxlength'=>11)); ?>
+                <? echo $form->error($model,'id'); ?>
             </div>
     
 
             <div class="row">
-                <?php echo $form->labelEx($model,'parent'); ?>
-                <?php echo CHtml::activeDropDownList($model,
+                <? echo $form->labelEx($model,'parent'); ?>
+                <? echo CHtml::activeDropDownList($model,
                         'parent',
 												Sitecontent::listData(),
                         array(
                             'empty' => array(
                                 '0' => ' - ')));
                 ?>
-                <?php echo $form->error($model,'header'); ?>
+                <? echo $form->error($model,'header'); ?>
             </div>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'visible'); ?>
-                <?php echo $form->dropDownList($model, 'visible', $model->itemAlias('visible')); ?>
-                <?php echo $form->error($model,'visible'); ?>
+                <? echo $form->labelEx($model,'visible'); ?>
+                <? echo $form->dropDownList($model, 'visible', $model->itemAlias('visible')); ?>
+                <? echo $form->error($model,'visible'); ?>
             </div>
     
     
             <div class="row redirect" style="display: none;">
-						<?php echo $form->labelEx($model,'redirect'); ?>
-						<?php echo $form->dropDownList($model,'redirect',
+						<? echo $form->labelEx($model,'redirect'); ?>
+						<? echo $form->dropDownList($model,'redirect',
 								CHtml::listData(Sitecontent::model()->findAll(), 'id', 'title'),
 								array(
 									'empty' => Cms::t('Absolute url')
 									)); ?>
 
             <div class="row redirect_absolute" style="display: none;">
-						<?php echo $form->labelEx($model,'redirect'); ?>
-						<?php echo $form->textField($model,'redirect',array(
+						<? echo $form->labelEx($model,'redirect'); ?>
+						<? echo $form->textField($model,'redirect',array(
 									'id' => 'Sitecontent_redirect_absolute',
 									'size'=>40,
 									'maxlength'=>255)); ?>
 						</div>
-						<?php echo $form->error($model,'redirect'); ?>
+						<? echo $form->error($model,'redirect'); ?>
 						</div>
 
             <div class="row password" style="display: none;">
-                <?php echo $form->labelEx($model,'password'); ?>
-                <?php echo $form->passwordField($model, 'password'); ?>
+                <? echo $form->labelEx($model,'password'); ?>
+                <? echo $form->passwordField($model, 'password'); ?>
             </div>    
            	<div class="row password" style="display: none;">
-            	<?php echo $form->labelEx($model,'password_repeat'); ?>
-                <?php echo $form->passwordField($model, 'password_repeat'); ?>
+            	<? echo $form->labelEx($model,'password_repeat'); ?>
+                <? echo $form->passwordField($model, 'password_repeat'); ?>
                 <div class="hint">
-                    <?php echo Cms::t('Enter a password to allow access by password'); ?>
+                    <? echo Cms::t('Enter a password to allow access by password'); ?>
                 </div>
                 
                 <div class="hint">
-                    <?php echo Cms::t('Leave it empty to only allow access by non-guest users'); ?>
+                    <? echo Cms::t('Leave it empty to only allow access by non-guest users'); ?>
                 </div>
                 
-                <?php echo $form->error($model,'password'); ?>
+                <? echo $form->error($model,'password'); ?>
             </div>
     
-            <?php Yii::app()->clientScript->registerScript('dropdown_visible', "
+            <? Yii::app()->clientScript->registerScript('dropdown_visible', "
                 if($('#Sitecontent_visible').val() == 2)
                     $('.password').show();
                 if($('#Sitecontent_visible').val() == 4)
@@ -221,48 +223,48 @@ if(sitecontent_title_url == '' || sitecontent_title_url == value2)
             ?>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'position'); ?>
-                <?php for($i = 0; $i < 10; $i++) $position[] = $i; ?>
-                <?php echo CHtml::dropDownList('Sitecontent[position]',
+                <? echo $form->labelEx($model,'position'); ?>
+                <? for($i = 0; $i < 10; $i++) $position[] = $i; ?>
+                <? echo CHtml::dropDownList('Sitecontent[position]',
                         $model->position,
                         $position); ?>
-                <?php echo $form->error($model,'position'); ?>
+                <? echo $form->error($model,'position'); ?>
             </div>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'title'); ?>
-                <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?>
-                <?php echo $form->error($model,'title'); ?>
+                <? echo $form->labelEx($model,'title'); ?>
+                <? echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?>
+                <? echo $form->error($model,'title'); ?>
             </div>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'title_browser'); ?>
-                <?php echo $form->textField($model,'title_browser',array('size'=>60,'maxlength'=>80)); ?>
-                <?php echo $form->error($model,'title_browser'); ?>
+                <? echo $form->labelEx($model,'title_browser'); ?>
+                <? echo $form->textField($model,'title_browser',array('size'=>60,'maxlength'=>80)); ?>
+                <? echo $form->error($model,'title_browser'); ?>
             </div>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'title_url'); ?>
-                <?php echo $form->textField($model,'title_url',array('size'=>60,'maxlength'=>80)); ?>
-                <?php echo $form->error($model,'title_url'); ?>
+                <? echo $form->labelEx($model,'title_url'); ?>
+                <? echo $form->textField($model,'title_url',array('size'=>60,'maxlength'=>80)); ?>
+                <? echo $form->error($model,'title_url'); ?>
             </div>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'language'); ?>
-                <?php echo $form->dropDownList($model,'language',Cms::module()->languages); ?>
-                <?php echo $form->error($model,'language'); ?>
+                <? echo $form->labelEx($model,'language'); ?>
+                <? echo $form->dropDownList($model,'language',Cms::module()->languages); ?>
+                <? echo $form->error($model,'language'); ?>
             </div>
     
             <div class="row">
-                <?php echo $form->labelEx($model,'content'); ?>
-                <?php echo $form->textArea($model,'content',array('rows'=>6, 'cols'=>50)); ?>
-                <?php echo $form->error($model,'content'); ?>
+                <? echo $form->labelEx($model,'content'); ?>
+                <? echo $form->textArea($model,'content',array('rows'=>6, 'cols'=>50)); ?>
+                <? echo $form->error($model,'content'); ?>
             </div>
 
             <div class="row">
-                <?php echo $form->labelEx($model,'tags'); ?>
-                <?php echo $form->textField($model,'tags',array('size'=>60,'maxlength'=>255)); ?>
-                <?php echo $form->error($model,'tags'); ?>
+                <? echo $form->labelEx($model,'tags'); ?>
+                <? echo $form->textField($model,'tags',array('size'=>60,'maxlength'=>255)); ?>
+                <? echo $form->error($model,'tags'); ?>
             </div>
 
     
@@ -271,9 +273,9 @@ if(sitecontent_title_url == '' || sitecontent_title_url == value2)
     
     <div class="clear"></div>
      <div class="row buttons">
-                <?php echo CHtml::submitButton($model->isNewRecord 
+                <? echo CHtml::submitButton($model->isNewRecord 
                         ? Yii::t('CmsModule.cms', 'Create sitecontent') 
                         : Yii::t('CmsModule.cms', 'Save sitecontent')); ?>
             </div>
-    <?php $this->endWidget(); ?>
+    <? $this->endWidget(); ?>
 </div><!-- form -->

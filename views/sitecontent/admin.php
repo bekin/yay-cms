@@ -1,4 +1,4 @@
-<?php
+<?
 $this->breadcrumbs=array(
 	Cms::t('Sitecontent')=>array('index'),
 	Cms::t('Manage'),
@@ -17,9 +17,9 @@ $this->menu=array(
 
 ?>
 
-<h2><?php echo Cms::t('Manage Sitecontent'); ?></h2>
+<h2><? echo Cms::t('Manage Sitecontent'); ?></h2>
 
-<?php 
+<? 
 $this->widget('application.modules.cms.components.CEditableGridView', array(
 			'id'=>'sitecontent-grid',
 			'dataProvider'=>$model->search(),
@@ -106,11 +106,11 @@ $this->widget('application.modules.cms.components.CEditableGridView', array(
 				),
 			)); ?>
 
-			<?php echo CHtml::link(
+			<? echo CHtml::link(
 					Cms::t('Create new Sitecontent'), array(
 						'//cms/sitecontent/create'), array('tabindex' => 1)); ?>
 
-<?php
+<?
 	if(Cms::module()->enableTooltip) {
 		Yii::app()->clientScript->registerScriptFile(
 				Yii::app()->getAssetManager()->publish(

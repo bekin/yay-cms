@@ -1,4 +1,4 @@
-<?php
+<?
 $this->breadcrumbs=array(
 	$this->module->id,
 );
@@ -16,6 +16,6 @@ $this->menu = array(
 
 ?>
 
-<h1> <?php echo Yii::t('CmsModule.cms', 'Welcome to your CMS'); ?> </h1> 
+<h1> <? echo Yii::t('CmsModule.cms', 'Welcome to your CMS'); ?> </h1> 
 
 

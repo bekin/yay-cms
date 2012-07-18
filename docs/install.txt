@@ -44,15 +44,15 @@ Use Cms::render($page, $language) to render sitecontent everywhere you want
 in your views, models or controllers:
 
 // render sitecontent page 3
-<?php echo Cms::render(3); ?>
+<? echo Cms::render(3); ?>
 
 // render sitecontent page with the url_title footer
-<?php echo Cms::render('footer'); ?>
+<? echo Cms::render('footer'); ?>
 
 // render sitecontent page with the url_title footer in _french_.
 // note that, by default, cms::render tries to resolve the page in the
 // language of Yii::app()->language:
-<?php echo Cms::render('footer', 'fr'); ?>
+<? echo Cms::render('footer', 'fr'); ?>
 
 
 Please also read CmsModule.php for additional configuration options.

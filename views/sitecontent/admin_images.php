@@ -1,6 +1,6 @@
-<h2> <?php echo Cms::t('Manage Images'); ?> </h2>
+<h2> <? echo Cms::t('Manage Images'); ?> </h2>
 
-<?php
+<?
 
 if($images) {
 	printf('<table><tr><td>%s</td><td>%s</td><td>%s</td></tr>',

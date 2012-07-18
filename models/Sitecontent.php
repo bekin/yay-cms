@@ -1,4 +1,4 @@
-<?php
+<?
 
 class Sitecontent extends CActiveRecord
 {
@@ -279,22 +279,23 @@ public function search()
 {
 	$criteria=new CDbCriteria;
 
-	$criteria->compare('id',$this->id);
-	$criteria->compare('parent',$this->parent);
-	$criteria->compare('position',$this->position);
-	$criteria->compare('language',$this->language);
-	$criteria->compare('title',$this->title,true);
-	$criteria->compare('title_url',$this->title_url,true);
-	$criteria->compare('metatags',$this->metatags,true);
-	$criteria->compare('images',$this->images,true);
-	$criteria->compare('content',$this->content,true);
-	$criteria->compare('authorid',$this->authorid);
-	$criteria->compare('createtime',$this->createtime);
-	$criteria->compare('updatetime',$this->updatetime);
-	$criteria->compare('visible',$this->visible);
-	$criteria->compare('tags',$this->tags, true);
-
-	$criteria->with = array('Parent');
+	if($this->id)
+		$criteria->compare('id',$this->id);
+	else {
+		$criteria->compare('parent',$this->parent);
+		$criteria->compare('position',$this->position);
+		$criteria->compare('language',$this->language);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('title_url',$this->title_url,true);
+		$criteria->compare('metatags',$this->metatags,true);
+		$criteria->compare('images',$this->images,true);
+		$criteria->compare('content',$this->content,true);
+		$criteria->compare('authorid',$this->authorid);
+		$criteria->compare('createtime',$this->createtime);
+		$criteria->compare('updatetime',$this->updatetime);
+		$criteria->compare('visible',$this->visible);
+		$criteria->compare('tags',$this->tags, true);
+	}
 
 	return new CActiveDataProvider('Sitecontent', array(
 				'criteria'=>$criteria,
