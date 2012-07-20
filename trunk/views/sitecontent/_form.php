@@ -273,9 +273,11 @@ if(sitecontent_title_url == '' || sitecontent_title_url == value2)
     
     <div class="clear"></div>
      <div class="row buttons">
-                <? echo CHtml::submitButton($model->isNewRecord 
-                        ? Yii::t('CmsModule.cms', 'Create sitecontent') 
-                        : Yii::t('CmsModule.cms', 'Save sitecontent')); ?>
+		 <? echo CHtml::submitButton(Yii::t('CmsModule.cms', 'Save'), array(
+					 'id' => 'submit-save')); ?> 
+		 <? echo CHtml::submitButton(Yii::t('CmsModule.cms', 'Save and close'), array(
+					 'id' => 'submit-close')); ?> 
+
             </div>
     <? $this->endWidget(); ?>
 </div><!-- form -->

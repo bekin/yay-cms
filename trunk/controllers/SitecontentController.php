@@ -214,7 +214,11 @@ class SitecontentController extends Controller
 
 			if($model->validate(null, false) && $model->save()) {
 				Cms::setFlash('The page has been created');
-				$this->redirect(array('admin'));
+				if(isset($_POST['yt0']))
+					$this->redirect(array(
+								'//cms/sitecontent/update', 'id' => $model->id));
+				else
+					$this->redirect(array('admin'));
 			}
 		}
 
@@ -251,7 +255,11 @@ class SitecontentController extends Controller
 
 			if($model->validate(null, false) && $model->save()) {
 				Cms::setFlash('The page has been updated');
-				$this->redirect(array('admin'));
+				if(isset($_POST['yt0']))
+					$this->redirect(array(
+								'//cms/sitecontent/update', 'id' => $model->id));
+				else
+					$this->redirect(array('admin'));
 			}
 		}
 
