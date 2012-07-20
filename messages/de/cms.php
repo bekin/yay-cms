@@ -76,6 +76,7 @@ return array(
 		'Save menupoint' => 'Menüpunkt speichern',
 		'Create' => 'Erstellen',
 		'Save' => 'Speichern',
+		'Save and close' => 'Speichern und schliessen',
 		'Update' => 'Bearbeite',
 		'Site options' => 'Seitenoptionen',
 		);
