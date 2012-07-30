@@ -37,6 +37,11 @@ class CmsModule extends CWebModule
 			'image/jpeg');
 	public $imagePath = 'images/';
 
+	// pageCache is disabled by default because it depends on a configured
+	// 'cache' component
+	public $pageCache = false;
+	public $httpCache = true;
+
 	// If a page is requested by CMS::render and not found, should
 	// a 404 be raised or the content simply not be delivered?
 	public $strict404raising = false;
