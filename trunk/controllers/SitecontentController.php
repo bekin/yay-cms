@@ -159,7 +159,7 @@ class SitecontentController extends Controller
 								'sql'=>'SELECT MAX(updatetime) FROM Sitecontent',
 								))))
 			{
-				$this->renderPartial(Cms::module()->sitecontentViewFile, array(
+				$this->render(Cms::module()->sitecontentViewFile, array(
 							'sitecontent' => $model,
 							));
 
