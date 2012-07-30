@@ -42,7 +42,15 @@ class SitecontentController extends Controller
 
 	public function filters()
 	{
-		return array('accessControl');
+		$filters = array('accessControl');
+		
+		if(Cms::module()->httpCache)
+			$filters[] = array(
+					'CHttpCacheFilter + index',
+					'lastModified'=>Yii::app()->db->createCommand(
+						"SELECT MAX(`updatetime`) FROM sitecontent")->queryScalar(),
+					);
+		return $filters;
 	}
 
 	public function actionAuth() {
@@ -125,14 +133,41 @@ class SitecontentController extends Controller
 		$model->views++;
 		$model->save(false, array('views'));
 
-		if($ajax)
-			$this->renderPartial(Cms::module()->sitecontentViewFile, array(
-						'sitecontent' => $model,
-						));
-		else
-			$this->render(Cms::module()->sitecontentViewFile, array(
-						'sitecontent' => $model,
-						));
+		if($ajax) {
+			if(Cms::module()->pageCache
+					&& $this->beginCache('yiicms_'.$model->id, array(
+							'dependency'=>array(
+								'class'=>'CDbCacheDependency',
+								'sql'=>'SELECT MAX(updatetime) FROM Sitecontent',
+								))))
+			{
+				$this->renderPartial(Cms::module()->sitecontentViewFile, array(
+							'sitecontent' => $model,
+							));
+
+				$this->endCache();
+			} else
+				$this->renderPartial(Cms::module()->sitecontentViewFile, array(
+							'sitecontent' => $model,
+							));
+		}
+		else {
+			if(Cms::module()->pageCache
+					&& $this->beginCache('yiicms_'.$model->id, array(
+							'dependency'=>array(
+								'class'=>'CDbCacheDependency',
+								'sql'=>'SELECT MAX(updatetime) FROM Sitecontent',
+								))))
+			{
+				$this->renderPartial(Cms::module()->sitecontentViewFile, array(
+							'sitecontent' => $model,
+							));
+
+			} else
+				$this->render(Cms::module()->sitecontentViewFile, array(
+							'sitecontent' => $model,
+							));
+		}
 	}
 
 	public function actionMoveImage($id, $language, $image, $direction) {
