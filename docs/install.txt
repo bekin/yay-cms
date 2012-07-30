@@ -55,6 +55,9 @@ in your views, models or controllers:
 <? echo Cms::render('footer', 'fr'); ?>
 
 
+'httpCache', which requires at least yii 1.1.11 is enabled by default.
+It is recommended to activate the 'pageCache' when using a caching 
+component.
 Please also read CmsModule.php for additional configuration options.
 
 Feel free to contact me at:
